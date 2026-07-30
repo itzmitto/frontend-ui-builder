@@ -1,31 +1,41 @@
+"use client";
+
+import { useCarousel } from "@/context/CarouselContext";
+
 export default function Sidebar() {
+  const { settings, setSettings } = useCarousel();
+
   return (
     <aside className="w-72 border-r border-zinc-800 bg-zinc-900 p-5">
       <h2 className="mb-6 text-xl font-bold">
-        Editor
+        Carousel Settings
       </h2>
 
-      <div className="space-y-3">
+      <div className="space-y-8">
 
-        <button className="w-full rounded-lg bg-zinc-800 p-3 text-left hover:bg-zinc-700">
-          Templates
-        </button>
+        <div>
+          <label className="mb-2 block text-sm font-medium">
+            Gap
+          </label>
 
-        <button className="w-full rounded-lg bg-zinc-800 p-3 text-left hover:bg-zinc-700">
-          Slides
-        </button>
+          <input
+            type="range"
+            min={0}
+            max={80}
+            value={settings.gap}
+            onChange={(e) =>
+              setSettings({
+                ...settings,
+                gap: Number(e.target.value),
+              })
+            }
+            className="w-full"
+          />
 
-        <button className="w-full rounded-lg bg-zinc-800 p-3 text-left hover:bg-zinc-700">
-          Navigation
-        </button>
-
-        <button className="w-full rounded-lg bg-zinc-800 p-3 text-left hover:bg-zinc-700">
-          Pagination
-        </button>
-
-        <button className="w-full rounded-lg bg-zinc-800 p-3 text-left hover:bg-zinc-700">
-          Colors
-        </button>
+          <p className="mt-2 text-sm text-zinc-400">
+            {settings.gap}px
+          </p>
+        </div>
 
       </div>
     </aside>

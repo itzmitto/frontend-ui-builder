@@ -1,21 +1,51 @@
+"use client";
+
+import { useCarousel } from "@/context/CarouselContext";
+
 export default function Preview() {
-  return (
-    <section className="flex flex-1 items-center justify-center bg-zinc-950">
+    const { settings } = useCarousel();
 
-      <div className="w-[700px] rounded-2xl border border-zinc-700 bg-zinc-900 p-10">
+    return (
+        <section className="flex flex-1 items-center justify-center bg-zinc-950">
 
-        <div className="flex gap-6 overflow-hidden">
+            <div className="rounded-2xl border border-zinc-700 bg-zinc-900 p-10">
 
-          <div className="h-56 w-80 rounded-xl bg-blue-500"></div>
+                <div
+                    className="flex overflow-hidden"
+                    style={{
+                        gap: settings.gap,
+                    }}
+                >
+                    <div
+                        className="rounded-xl bg-blue-500"
+                        style={{
+                            width: settings.width,
+                            height: settings.height,
+                            borderRadius: settings.borderRadius,
+                        }}
+                    />
 
-          <div className="h-56 w-80 rounded-xl bg-purple-500"></div>
+                    <div
+                        className="rounded-xl bg-purple-500"
+                        style={{
+                            width: settings.width,
+                            height: settings.height,
+                            borderRadius: settings.borderRadius,
+                        }}
+                    />
 
-          <div className="h-56 w-80 rounded-xl bg-pink-500"></div>
+                    <div
+                        className="rounded-xl bg-pink-500"
+                        style={{
+                            width: settings.width,
+                            height: settings.height,
+                            borderRadius: settings.borderRadius,
+                        }}
+                    />
+                </div>
 
-        </div>
+            </div>
 
-      </div>
-
-    </section>
-  );
+        </section>
+    );
 }
