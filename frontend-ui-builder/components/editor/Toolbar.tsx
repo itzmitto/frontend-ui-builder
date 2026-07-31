@@ -44,6 +44,20 @@ export default function Toolbar() {
         setSelectedSlide(slides.length);
     };
 
+    const deleteSlide = () => {
+        if (slides.length <= 1) return;
+
+        const updatedSlides = slides.filter(
+            (_, index) => index !== selectedSlide
+        );
+
+        setSlides(updatedSlides);
+
+        if (selectedSlide >= updatedSlides.length) {
+            setSelectedSlide(updatedSlides.length - 1);
+        }
+    };
+
     const exportProject = async () => {
         await exportCarousel(
             generateHTML(settings),
@@ -58,6 +72,10 @@ export default function Toolbar() {
 
             <div className="h-6 w-px bg-zinc-700" />
 
+            <div className="rounded-lg bg-zinc-800 px-4 py-2 text-sm text-zinc-300">
+                Slide {selectedSlide + 1} / {slides.length}
+            </div>
+
             <button
                 onClick={addSlide}
                 className="rounded-lg bg-blue-600 px-4 py-2 transition hover:bg-blue-700"
@@ -70,6 +88,14 @@ export default function Toolbar() {
                 className="rounded-lg bg-zinc-800 px-4 py-2 transition hover:bg-zinc-700"
             >
                 Duplicate
+            </button>
+
+            <button
+                onClick={deleteSlide}
+                disabled={slides.length <= 1}
+                className="rounded-lg bg-red-600 px-4 py-2 transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+                Delete
             </button>
 
             <button

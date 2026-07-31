@@ -62,10 +62,33 @@ export default function Preview() {
         setSelectedSlide,
     ]);
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "ArrowRight") {
+                nextSlide();
+            }
+
+            if (event.key === "ArrowLeft") {
+                previousSlide();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [
+        slides.length,
+        settings.infinite,
+    ]);
+
     if (slides.length === 0) {
         return (
             <section className="flex flex-1 items-center justify-center bg-zinc-950">
-                <p className="text-zinc-400">No slides available.</p>
+                <p className="text-zinc-400">
+                    No slides available.
+                </p>
             </section>
         );
     }
