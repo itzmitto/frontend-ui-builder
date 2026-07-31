@@ -2,13 +2,14 @@
 
 import SlidesSection from "./sections/SlidesSection";
 import SlideEditor from "./SlideEditor";
+import MediaLibrary from "./media/MediaLibrary";
 import LayoutSection from "./sections/LayoutSection";
 import AppearanceSection from "./sections/AppearanceSection";
 import BehaviorSection from "./sections/BehaviorSection";
 
 export default function PropertyPanel() {
     return (
-        <aside className="w-80 border-r border-zinc-800 bg-zinc-900">
+        <aside className="w-80 border-r border-zinc-800 bg-zinc-900 overflow-y-auto">
             <div className="border-b border-zinc-800 p-5">
                 <h2 className="text-xl font-bold">
                     Properties
@@ -17,9 +18,15 @@ export default function PropertyPanel() {
 
             <div className="space-y-8 p-5">
                 <SlidesSection />
+
                 <SlideEditor />
+
+                <MediaLibrary />
+
                 <LayoutSection />
+
                 <AppearanceSection />
+
                 <BehaviorSection />
             </div>
         </aside>

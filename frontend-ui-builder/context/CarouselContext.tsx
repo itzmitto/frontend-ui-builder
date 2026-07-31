@@ -1,81 +1,89 @@
 "use client";
 
 import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
+    createContext,
+    useContext,
+    useState,
+    ReactNode,
 } from "react";
 
 import {
-  CarouselSettings,
-  defaultCarouselSettings,
+    CarouselSettings,
+    defaultCarouselSettings,
 } from "@/lib/carousel";
 
 import { Slide } from "@/types/slide";
+import { Media } from "@/types/media";
 
 type CarouselContextType = {
-  settings: CarouselSettings;
-  setSettings: React.Dispatch<React.SetStateAction<CarouselSettings>>;
+    settings: CarouselSettings;
+    setSettings: React.Dispatch<React.SetStateAction<CarouselSettings>>;
 
-  slides: Slide[];
-  setSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+    slides: Slide[];
+    setSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
 
-  selectedSlide: number;
-  setSelectedSlide: React.Dispatch<React.SetStateAction<number>>;
+    selectedSlide: number;
+    setSelectedSlide: React.Dispatch<React.SetStateAction<number>>;
+
+    media: Media[];
+    setMedia: React.Dispatch<React.SetStateAction<Media[]>>;
 };
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
 
 export function CarouselProvider({
-  children,
+    children,
 }: {
-  children: ReactNode;
+    children: ReactNode;
 }) {
-  const [settings, setSettings] = useState(defaultCarouselSettings);
+    const [settings, setSettings] = useState(defaultCarouselSettings);
 
-  const [slides, setSlides] = useState<Slide[]>([
-    {
-      id: 1,
-      title: "Mountain",
-      image: "https://picsum.photos/800/500?random=1",
-    },
-    {
-      id: 2,
-      title: "Forest",
-      image: "https://picsum.photos/800/500?random=2",
-    },
-    {
-      id: 3,
-      title: "Ocean",
-      image: "https://picsum.photos/800/500?random=3",
-    },
-  ]);
+    const [slides, setSlides] = useState<Slide[]>([
+        {
+            id: 1,
+            title: "Mountain",
+            image: "https://picsum.photos/800/500?random=1",
+        },
+        {
+            id: 2,
+            title: "Forest",
+            image: "https://picsum.photos/800/500?random=2",
+        },
+        {
+            id: 3,
+            title: "Ocean",
+            image: "https://picsum.photos/800/500?random=3",
+        },
+    ]);
 
-  const [selectedSlide, setSelectedSlide] = useState(0);
+    const [selectedSlide, setSelectedSlide] = useState(0);
 
-  return (
-    <CarouselContext.Provider
-      value={{
-        settings,
-        setSettings,
-        slides,
-        setSlides,
-        selectedSlide,
-        setSelectedSlide,
-      }}
-    >
-      {children}
-    </CarouselContext.Provider>
-  );
+    const [media, setMedia] = useState<Media[]>([]);
+
+    return (
+        <CarouselContext.Provider
+            value={{
+                settings,
+                setSettings,
+                slides,
+                setSlides,
+                selectedSlide,
+                setSelectedSlide,
+                media,
+                setMedia,
+            }}
+        >
+            {children}
+        </CarouselContext.Provider>
+    );
 }
 
 export function useCarousel() {
-  const context = useContext(CarouselContext);
+    const context = useContext(CarouselContext);
 
-  if (!context) {
-    throw new Error("useCarousel must be used inside CarouselProvider");
-  }
+    if (!context) {
+        throw new Error("useCarousel must be used inside CarouselProvider");
+    }
 
-  return context;
+    return context;
 }
