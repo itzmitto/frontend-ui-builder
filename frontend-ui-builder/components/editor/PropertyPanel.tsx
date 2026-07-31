@@ -1,6 +1,7 @@
 "use client";
 
 import SlidesSection from "./sections/SlidesSection";
+import SlideEditor from "./SlideEditor";
 import LayoutSection from "./sections/LayoutSection";
 import AppearanceSection from "./sections/AppearanceSection";
 import BehaviorSection from "./sections/BehaviorSection";
@@ -16,6 +17,7 @@ export default function PropertyPanel() {
 
             <div className="space-y-8 p-5">
                 <SlidesSection />
+                <SlideEditor />
                 <LayoutSection />
                 <AppearanceSection />
                 <BehaviorSection />

@@ -3,7 +3,12 @@
 import { useCarousel } from "@/context/CarouselContext";
 
 export default function SlidesSection() {
-    const { slides, setSlides } = useCarousel();
+    const {
+        slides,
+        setSlides,
+        selectedSlide,
+        setSelectedSlide,
+    } = useCarousel();
 
     const addSlide = () => {
         setSlides([
@@ -22,11 +27,38 @@ export default function SlidesSection() {
                 Slides
             </h2>
 
-            <p>{slides.length} slides</p>
+            <div className="space-y-2">
+                {slides.map((slide, index) => (
+                    <button
+                        key={slide.id}
+                        onClick={() => setSelectedSlide(index)}
+                        className={`flex w-full items-center gap-3 rounded-lg border p-3 transition ${selectedSlide === index
+                            ? "border-blue-500 bg-blue-600/20"
+                            : "border-zinc-700 hover:bg-zinc-800"
+                            }`}
+                    >
+                        <img
+                            src={slide.image}
+                            alt={slide.title}
+                            className="h-12 w-16 rounded object-cover"
+                        />
+
+                        <div className="flex flex-col text-left">
+                            <span className="font-medium">
+                                {slide.title}
+                            </span>
+
+                            <span className="text-xs text-zinc-400">
+                                Slide {index + 1}
+                            </span>
+                        </div>
+                    </button>
+                ))}
+            </div>
 
             <button
                 onClick={addSlide}
-                className="rounded-lg bg-blue-600 px-4 py-2 hover:bg-blue-700"
+                className="w-full rounded-lg bg-blue-600 py-2 transition hover:bg-blue-700"
             >
                 + Add Slide
             </button>

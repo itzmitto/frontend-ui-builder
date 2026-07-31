@@ -20,6 +20,9 @@ type CarouselContextType = {
 
   slides: Slide[];
   setSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
+
+  selectedSlide: number;
+  setSelectedSlide: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
@@ -49,6 +52,8 @@ export function CarouselProvider({
     },
   ]);
 
+  const [selectedSlide, setSelectedSlide] = useState(0);
+
   return (
     <CarouselContext.Provider
       value={{
@@ -56,6 +61,8 @@ export function CarouselProvider({
         setSettings,
         slides,
         setSlides,
+        selectedSlide,
+        setSelectedSlide,
       }}
     >
       {children}

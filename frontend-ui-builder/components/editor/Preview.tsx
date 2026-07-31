@@ -1,21 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
 
 export default function Preview() {
-    const { settings, slides } = useCarousel();
-    const [currentSlide, setCurrentSlide] = useState(0);
+    const {
+        settings,
+        slides,
+        selectedSlide,
+        setSelectedSlide,
+    } = useCarousel();
 
     const nextSlide = () => {
-        setCurrentSlide((prev) =>
+        setSelectedSlide((prev) =>
             prev === slides.length - 1 ? 0 : prev + 1
         );
     };
 
     const previousSlide = () => {
-        setCurrentSlide((prev) =>
+        setSelectedSlide((prev) =>
             prev === 0 ? slides.length - 1 : prev - 1
         );
     };
@@ -32,8 +35,8 @@ export default function Preview() {
                     }}
                 >
                     <Image
-                        src={slides[currentSlide].image}
-                        alt={slides[currentSlide].title}
+                        src={slides[selectedSlide].image}
+                        alt={slides[selectedSlide].title}
                         width={settings.width}
                         height={settings.height}
                         className="h-full w-full object-cover"
