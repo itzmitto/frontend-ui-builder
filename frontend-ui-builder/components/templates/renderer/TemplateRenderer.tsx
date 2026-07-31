@@ -3,6 +3,22 @@
 import { useCarousel } from "@/context/CarouselContext";
 import FilmStrip from "@/components/templates/film-strip/FilmStrip";
 
+function ComingSoon({ title }: { title: string }) {
+    return (
+        <div className="flex h-full flex-col items-center justify-center text-center">
+            <div className="mb-4 text-7xl">🚧</div>
+
+            <h2 className="text-3xl font-bold text-white">
+                {title}
+            </h2>
+
+            <p className="mt-2 text-zinc-400">
+                This template is coming soon.
+            </p>
+        </div>
+    );
+}
+
 export default function TemplateRenderer() {
     const { selectedTemplate } = useCarousel();
 
@@ -11,39 +27,19 @@ export default function TemplateRenderer() {
             return <FilmStrip />;
 
         case "cover-flow":
-            return (
-                <div className="flex h-full items-center justify-center text-3xl font-bold text-zinc-500">
-                    Cover Flow Preview
-                </div>
-            );
+            return <ComingSoon title="Cover Flow" />;
 
         case "orbit":
-            return (
-                <div className="flex h-full items-center justify-center text-3xl font-bold text-zinc-500">
-                    Orbit Preview
-                </div>
-            );
+            return <ComingSoon title="Orbit" />;
 
         case "cards":
-            return (
-                <div className="flex h-full items-center justify-center text-3xl font-bold text-zinc-500">
-                    Cards Preview
-                </div>
-            );
+            return <ComingSoon title="Cards" />;
 
         case "gallery":
-            return (
-                <div className="flex h-full items-center justify-center text-3xl font-bold text-zinc-500">
-                    Gallery Preview
-                </div>
-            );
+            return <ComingSoon title="Gallery" />;
 
         case "hero-slider":
-            return (
-                <div className="flex h-full items-center justify-center text-3xl font-bold text-zinc-500">
-                    Hero Slider Preview
-                </div>
-            );
+            return <ComingSoon title="Hero Slider" />;
 
         default:
             return <FilmStrip />;
