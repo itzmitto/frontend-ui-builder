@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
 
@@ -9,19 +10,65 @@ export default function Preview() {
         slides,
         selectedSlide,
         setSelectedSlide,
+        device,
     } = useCarousel();
+
+    const previewWidth =
+        device === "desktop"
+            ? settings.width
+            : device === "tablet"
+            ? 768
+            : 375;
 
     const nextSlide = () => {
         setSelectedSlide((prev) =>
-            prev === slides.length - 1 ? 0 : prev + 1
+            prev === slides.length - 1
+                ? settings.infinite
+                    ? 0
+                    : prev
+                : prev + 1
         );
     };
 
     const previousSlide = () => {
         setSelectedSlide((prev) =>
-            prev === 0 ? slides.length - 1 : prev - 1
+            prev === 0
+                ? settings.infinite
+                    ? slides.length - 1
+                    : 0
+                : prev - 1
         );
     };
+
+    useEffect(() => {
+        if (!settings.autoplay || slides.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setSelectedSlide((prev) =>
+                prev === slides.length - 1
+                    ? settings.infinite
+                        ? 0
+                        : prev
+                    : prev + 1
+            );
+        }, settings.speed);
+
+        return () => clearInterval(interval);
+    }, [
+        settings.autoplay,
+        settings.speed,
+        settings.infinite,
+        slides.length,
+        setSelectedSlide,
+    ]);
+
+    if (slides.length === 0) {
+        return (
+            <section className="flex flex-1 items-center justify-center bg-zinc-950">
+                <p className="text-zinc-400">No slides available.</p>
+            </section>
+        );
+    }
 
     return (
         <section className="flex flex-1 items-center justify-center bg-zinc-950 p-10">
@@ -29,18 +76,28 @@ export default function Preview() {
                 <div
                     className="overflow-hidden"
                     style={{
-                        width: settings.width,
+                        width: previewWidth,
                         height: settings.height,
                         borderRadius: settings.borderRadius,
                     }}
                 >
-                    <Image
-                        src={slides[selectedSlide].image}
-                        alt={slides[selectedSlide].title}
-                        width={settings.width}
-                        height={settings.height}
-                        className="h-full w-full object-cover"
-                    />
+                    <div
+                        className="flex h-full transition-transform duration-500 ease-in-out"
+                        style={{
+                            transform: `translateX(-${selectedSlide * previewWidth}px)`,
+                        }}
+                    >
+                        {slides.map((slide) => (
+                            <Image
+                                key={slide.id}
+                                src={slide.image}
+                                alt={slide.title}
+                                width={previewWidth}
+                                height={settings.height}
+                                className="h-full flex-shrink-0 object-cover"
+                            />
+                        ))}
+                    </div>
                 </div>
 
                 {settings.navigation && (
@@ -58,6 +115,22 @@ export default function Preview() {
                         >
                             Next →
                         </button>
+                    </div>
+                )}
+
+                {settings.pagination && (
+                    <div className="mt-5 flex justify-center gap-2">
+                        {slides.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setSelectedSlide(index)}
+                                className={`h-3 w-3 rounded-full transition ${
+                                    selectedSlide === index
+                                        ? "bg-blue-500"
+                                        : "bg-zinc-600 hover:bg-zinc-500"
+                                }`}
+                            />
+                        ))}
                     </div>
                 )}
             </div>

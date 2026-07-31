@@ -7,6 +7,7 @@ import {
     generateJS,
 } from "@/lib/generators/carouselGenerator";
 import { exportCarousel } from "@/lib/export/exportCarousel";
+import DeviceSwitcher from "./DeviceSwitcher";
 
 export default function Toolbar() {
     const {
@@ -29,6 +30,8 @@ export default function Toolbar() {
     };
 
     const duplicateSlide = () => {
+        if (slides.length === 0) return;
+
         const slide = slides[selectedSlide];
 
         const duplicatedSlide = {
@@ -51,6 +54,10 @@ export default function Toolbar() {
 
     return (
         <div className="flex items-center gap-3 border-b border-zinc-800 bg-zinc-900 p-4">
+            <DeviceSwitcher />
+
+            <div className="h-6 w-px bg-zinc-700" />
+
             <button
                 onClick={addSlide}
                 className="rounded-lg bg-blue-600 px-4 py-2 transition hover:bg-blue-700"

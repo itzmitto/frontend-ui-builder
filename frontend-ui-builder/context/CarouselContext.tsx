@@ -14,6 +14,7 @@ import {
 
 import { Slide } from "@/types/slide";
 import { Media } from "@/types/media";
+import { Device } from "@/types/device";
 
 type CarouselContextType = {
     settings: CarouselSettings;
@@ -27,6 +28,9 @@ type CarouselContextType = {
 
     media: Media[];
     setMedia: React.Dispatch<React.SetStateAction<Media[]>>;
+
+    device: Device;
+    setDevice: React.Dispatch<React.SetStateAction<Device>>;
 };
 
 const CarouselContext = createContext<CarouselContextType | null>(null);
@@ -60,6 +64,8 @@ export function CarouselProvider({
 
     const [media, setMedia] = useState<Media[]>([]);
 
+    const [device, setDevice] = useState<Device>("desktop");
+
     return (
         <CarouselContext.Provider
             value={{
@@ -71,6 +77,8 @@ export function CarouselProvider({
                 setSelectedSlide,
                 media,
                 setMedia,
+                device,
+                setDevice,
             }}
         >
             {children}
