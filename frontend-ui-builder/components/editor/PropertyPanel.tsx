@@ -2,6 +2,7 @@
 
 import AppearanceSection from "./sections/AppearanceSection";
 import LayoutSection from "./sections/LayoutSection";
+import BehaviorSection from "./sections/BehaviorSection";
 
 export default function PropertyPanel() {
     return (
@@ -15,6 +16,7 @@ export default function PropertyPanel() {
             <div className="space-y-8 p-5">
                 <LayoutSection />
                 <AppearanceSection />
+                <BehaviorSection />
             </div>
         </aside>
     );

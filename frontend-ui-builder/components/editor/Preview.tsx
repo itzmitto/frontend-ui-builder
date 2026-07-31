@@ -41,21 +41,23 @@ export default function Preview() {
                     />
                 </div>
 
-                <div className="mt-6 flex justify-center gap-4">
-                    <button
-                        onClick={previousSlide}
-                        className="rounded-lg bg-zinc-800 px-4 py-2 transition hover:bg-zinc-700"
-                    >
-                        ← Previous
-                    </button>
+                {settings.navigation && (
+                    <div className="mt-6 flex justify-center gap-4">
+                        <button
+                            onClick={previousSlide}
+                            className="rounded-lg bg-zinc-800 px-4 py-2 transition hover:bg-zinc-700"
+                        >
+                            ← Previous
+                        </button>
 
-                    <button
-                        onClick={nextSlide}
-                        className="rounded-lg bg-zinc-800 px-4 py-2 transition hover:bg-zinc-700"
-                    >
-                        Next →
-                    </button>
-                </div>
+                        <button
+                            onClick={nextSlide}
+                            className="rounded-lg bg-zinc-800 px-4 py-2 transition hover:bg-zinc-700"
+                        >
+                            Next →
+                        </button>
+                    </div>
+                )}
             </div>
         </section>
     );

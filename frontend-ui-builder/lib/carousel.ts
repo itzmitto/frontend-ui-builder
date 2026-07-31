@@ -1,6 +1,6 @@
 export type CarouselSettings = {
   slides: number;
-  gap: number;
+ gap: number;
   width: number;
   height: number;
   borderRadius: number;
