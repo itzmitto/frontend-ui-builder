@@ -3,10 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
-import { slides } from "@/data/slides";
 
 export default function Preview() {
-    const { settings } = useCarousel();
+    const { settings, slides } = useCarousel();
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const nextSlide = () => {
