@@ -1,37 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
-import { Template } from "@/types/template";
-
-const templates: {
-    id: Template;
-    name: string;
-}[] = [
-    {
-        id: "film-strip",
-        name: "🎞 Film Strip",
-    },
-    {
-        id: "cover-flow",
-        name: "🌀 Cover Flow",
-    },
-    {
-        id: "orbit",
-        name: "🌍 Orbit",
-    },
-    {
-        id: "cards",
-        name: "🃏 Cards",
-    },
-    {
-        id: "gallery",
-        name: "🖼 Gallery",
-    },
-    {
-        id: "hero-slider",
-        name: "⭐ Hero Slider",
-    },
-];
+import { templateCategories } from "@/data/templates";
 
 export default function TemplateSidebar() {
     const {
@@ -40,28 +11,53 @@ export default function TemplateSidebar() {
     } = useCarousel();
 
     return (
-        <aside className="w-64 border-r border-zinc-800 bg-zinc-900 p-4">
-            <h2 className="mb-4 text-lg font-semibold">
-                Templates
-            </h2>
-
-            <div className="space-y-2">
-                {templates.map((template) => (
-                    <button
-                        key={template.id}
-                        onClick={() =>
-                            setSelectedTemplate(template.id)
-                        }
-                        className={`w-full rounded-lg px-4 py-3 text-left transition ${
-                            selectedTemplate === template.id
-                                ? "bg-blue-600"
-                                : "bg-zinc-800 hover:bg-zinc-700"
-                        }`}
-                    >
-                        {template.name}
-                    </button>
-                ))}
+        <aside className="w-72 overflow-y-auto border-r border-zinc-800 bg-[#161616]">
+            <div className="p-4">
+                <h2 className="text-xl font-semibold text-white">
+                    Templates
+                </h2>
             </div>
+
+            {templateCategories.map((category) => (
+                <div
+                    key={category.title}
+                    className="mb-8 px-4"
+                >
+                    <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                        {category.title}
+                    </h3>
+
+                    <div className="grid grid-cols-2 gap-3">
+                        {category.templates.map((template) => (
+                            <button
+                                key={template.id}
+                                onClick={() =>
+                                    setSelectedTemplate(template.id)
+                                }
+                                className={`overflow-hidden rounded-xl border transition ${
+                                    selectedTemplate === template.id
+                                        ? "border-blue-500 bg-zinc-800"
+                                        : "border-zinc-700 bg-zinc-900 hover:border-zinc-500"
+                                }`}
+                            >
+                                <Image
+                                    src={template.image}
+                                    alt={template.name}
+                                    width={200}
+                                    height={120}
+                                    className="h-24 w-full object-cover"
+                                />
+
+                                <div className="p-2">
+                                    <p className="truncate text-left text-xs font-medium text-white">
+                                        {template.name}
+                                    </p>
+                                </div>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            ))}
         </aside>
     );
 }
