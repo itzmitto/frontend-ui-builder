@@ -2,8 +2,9 @@
 
 import TemplateSidebar from "./TemplateSidebar";
 import PropertyPanel from "./PropertyPanel";
-import Preview from "./Preview";
+import Preview from "./FilmStrip";
 import Toolbar from "./Toolbar";
+import TemplateRenderer from "@/components/templates/renderer/TemplateRenderer";
 
 export default function EditorLayout() {
     return (
@@ -13,7 +14,7 @@ export default function EditorLayout() {
             <main className="flex flex-1 flex-col">
                 <Toolbar />
 
-                <Preview />
+                <TemplateRenderer />
             </main>
 
             <PropertyPanel />
