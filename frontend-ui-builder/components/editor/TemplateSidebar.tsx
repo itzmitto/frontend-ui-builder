@@ -1,7 +1,7 @@
 "use client";
 
-import { templateCategories } from "@/data/templates";
 import { useCarousel } from "@/context/CarouselContext";
+import { templateCategories } from "@/data/templates";
 import TemplateCard from "./TemplateCard";
 
 export default function TemplateSidebar() {
@@ -11,27 +11,30 @@ export default function TemplateSidebar() {
     } = useCarousel();
 
     return (
-        <aside className="w-72 overflow-y-auto border-r border-zinc-800 bg-zinc-950">
-            <div className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-950 p-5">
-                <h2 className="text-xl font-bold">
+        <aside className="w-80 border-r border-zinc-800 bg-zinc-950 overflow-y-auto">
+            <div className="sticky top-0 z-20 border-b border-zinc-800 bg-zinc-950 p-5">
+                <h1 className="text-2xl font-bold">
                     Templates
-                </h2>
+                </h1>
+
+                <p className="mt-1 text-sm text-zinc-400">
+                    Choose a template to start building.
+                </p>
             </div>
 
-            <div className="space-y-8 p-4">
+            <div className="space-y-8 p-5">
                 {templateCategories.map((category) => (
                     <section key={category.title}>
-                        <h3 className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-500">
                             {category.title}
-                        </h3>
+                        </h2>
 
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-4">
                             {category.templates.map((template) => (
                                 <TemplateCard
                                     key={template.id}
                                     id={template.id}
                                     name={template.name}
-                                    image={template.image}
                                     selected={
                                         selectedTemplate === template.id
                                     }
