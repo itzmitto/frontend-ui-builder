@@ -15,6 +15,7 @@ import {
 import { Slide } from "@/types/slide";
 import { Media } from "@/types/media";
 import { Device } from "@/types/device";
+import { Template } from "@/types/template";
 
 type CarouselContextType = {
     settings: CarouselSettings;
@@ -31,16 +32,25 @@ type CarouselContextType = {
 
     device: Device;
     setDevice: React.Dispatch<React.SetStateAction<Device>>;
+
+    selectedTemplate: Template;
+    setSelectedTemplate: React.Dispatch<
+        React.SetStateAction<Template>
+    >;
 };
 
-const CarouselContext = createContext<CarouselContextType | null>(null);
+const CarouselContext = createContext<CarouselContextType | null>(
+    null
+);
 
 export function CarouselProvider({
     children,
 }: {
     children: ReactNode;
 }) {
-    const [settings, setSettings] = useState(defaultCarouselSettings);
+    const [settings, setSettings] = useState(
+        defaultCarouselSettings
+    );
 
     const [slides, setSlides] = useState<Slide[]>([
         {
@@ -66,6 +76,9 @@ export function CarouselProvider({
 
     const [device, setDevice] = useState<Device>("desktop");
 
+    const [selectedTemplate, setSelectedTemplate] =
+        useState<Template>("film-strip");
+
     return (
         <CarouselContext.Provider
             value={{
@@ -79,6 +92,8 @@ export function CarouselProvider({
                 setMedia,
                 device,
                 setDevice,
+                selectedTemplate,
+                setSelectedTemplate,
             }}
         >
             {children}
@@ -90,7 +105,9 @@ export function useCarousel() {
     const context = useContext(CarouselContext);
 
     if (!context) {
-        throw new Error("useCarousel must be used inside CarouselProvider");
+        throw new Error(
+            "useCarousel must be used inside CarouselProvider"
+        );
     }
 
     return context;
