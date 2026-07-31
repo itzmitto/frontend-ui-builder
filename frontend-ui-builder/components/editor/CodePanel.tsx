@@ -1,62 +1,44 @@
 "use client";
 
 import { useCarousel } from "@/context/CarouselContext";
+import {
+  generateHTML,
+  generateCSS,
+  generateJS,
+} from "@/lib/generators/carouselGenerator";
 
 export default function CodePanel() {
-    const { settings } = useCarousel();
+  const { settings } = useCarousel();
 
-    return (
-        <aside className="w-96 border-l border-zinc-800 bg-zinc-900">
-            <div className="border-b border-zinc-800 p-4">
-                <h2 className="font-bold">
-                    Generated Code
-                </h2>
-            </div>
+  return (
+    <aside className="w-96 border-l border-zinc-800 bg-zinc-900 p-5 overflow-auto">
+      <h2 className="mb-6 text-xl font-bold">Generated Code</h2>
 
-            <div className="p-4">
-                <div className="mb-6">
-                    <h3 className="mb-2 font-semibold">
-                        HTML
-                    </h3>
+      <div className="space-y-6">
+        <div>
+          <h3 className="mb-2 font-semibold">HTML</h3>
 
-                    <pre className="rounded bg-zinc-950 p-3 text-sm">
-                        {`<div class="carousel">
-  <div class="slide"></div>
-  <div class="slide"></div>
-  <div class="slide"></div>
-</div>`}
-                    </pre>
-                </div>
+          <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-sm">
+            <code>{generateHTML(settings)}</code>
+          </pre>
+        </div>
 
-                <div className="mb-6">
-                    <h3 className="mb-2 font-semibold">
-                        CSS
-                    </h3>
+        <div>
+          <h3 className="mb-2 font-semibold">CSS</h3>
 
-                    <pre className="rounded bg-zinc-950 p-3 text-sm">
-                        {`.carousel{
-display:flex;
-gap:${settings.gap}px;
-}
+          <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-sm">
+            <code>{generateCSS(settings)}</code>
+          </pre>
+        </div>
 
-.slide{
-width:${settings.width}px;
-height:${settings.height}px;
-border-radius:${settings.borderRadius}px;
-}`}
-                    </pre>
-                </div>
+        <div>
+          <h3 className="mb-2 font-semibold">JavaScript</h3>
 
-                <div>
-                    <h3 className="mb-2 font-semibold">
-                        JavaScript
-                    </h3>
-
-                    <pre className="rounded bg-zinc-950 p-3 text-sm">
-                        {`console.log("Carousel");`}
-                    </pre>
-                </div>
-            </div>
-        </aside>
-    );
+          <pre className="overflow-x-auto rounded-lg bg-zinc-950 p-4 text-sm">
+            <code>{generateJS(settings)}</code>
+          </pre>
+        </div>
+      </div>
+    </aside>
+  );
 }
