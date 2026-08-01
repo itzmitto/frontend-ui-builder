@@ -10,6 +10,7 @@ export default function CoverFlow() {
         selectedSlide,
         setSelectedSlide,
         settings,
+        coverFlowSettings,
     } = useCarousel();
 
     const nextSlide = () => {
@@ -36,13 +37,7 @@ export default function CoverFlow() {
         if (!settings.autoplay || slides.length <= 1) return;
 
         const interval = setInterval(() => {
-            setSelectedSlide((prev) =>
-                prev === slides.length - 1
-                    ? settings.infinite
-                        ? 0
-                        : prev
-                    : prev + 1
-            );
+            nextSlide();
         }, settings.speed);
 
         return () => clearInterval(interval);
@@ -51,7 +46,6 @@ export default function CoverFlow() {
         settings.speed,
         settings.infinite,
         slides.length,
-        setSelectedSlide,
     ]);
 
     useEffect(() => {
@@ -90,7 +84,7 @@ export default function CoverFlow() {
             <div
                 className="relative flex h-full w-full items-center justify-center overflow-hidden"
                 style={{
-                    perspective: "1800px",
+                    perspective: `${coverFlowSettings.perspective}px`,
                 }}
             >
                 {slides.map((slide, index) => {
@@ -103,37 +97,58 @@ export default function CoverFlow() {
                     let transform = "";
                     let opacity = 1;
                     let scale = 1;
+
                     const zIndex = 100 - Math.abs(offset);
 
                     switch (offset) {
                         case -2:
-                            transform = "translateX(-360px) rotateY(60deg)";
-                            scale = 0.7;
-                            opacity = 0.2;
+                            transform = `
+                                translateX(-${coverFlowSettings.spacing * 2}px)
+                                translateZ(-${coverFlowSettings.depth * 2}px)
+                                rotateY(${coverFlowSettings.rotate + 10}deg)
+                            `;
+                            scale = coverFlowSettings.centerScale - 0.3;
+                            opacity = coverFlowSettings.sideOpacity * 0.4;
                             break;
 
                         case -1:
-                            transform = "translateX(-180px) rotateY(50deg)";
-                            scale = 0.85;
-                            opacity = 0.55;
+                            transform = `
+                                translateX(-${coverFlowSettings.spacing}px)
+                                translateZ(-${coverFlowSettings.depth}px)
+                                rotateY(${coverFlowSettings.rotate}deg)
+                            `;
+                            scale = coverFlowSettings.centerScale - 0.15;
+                            opacity = coverFlowSettings.sideOpacity;
                             break;
 
                         case 0:
-                            transform = "translateX(0px) rotateY(0deg)";
-                            scale = 1;
+                            transform = `
+                                translateX(0px)
+                                translateZ(0px)
+                                rotateY(0deg)
+                            `;
+                            scale = coverFlowSettings.centerScale;
                             opacity = 1;
                             break;
 
                         case 1:
-                            transform = "translateX(180px) rotateY(-50deg)";
-                            scale = 0.85;
-                            opacity = 0.55;
+                            transform = `
+                                translateX(${coverFlowSettings.spacing}px)
+                                translateZ(-${coverFlowSettings.depth}px)
+                                rotateY(-${coverFlowSettings.rotate}deg)
+                            `;
+                            scale = coverFlowSettings.centerScale - 0.15;
+                            opacity = coverFlowSettings.sideOpacity;
                             break;
 
                         case 2:
-                            transform = "translateX(360px) rotateY(-60deg)";
-                            scale = 0.7;
-                            opacity = 0.2;
+                            transform = `
+                                translateX(${coverFlowSettings.spacing * 2}px)
+                                translateZ(-${coverFlowSettings.depth * 2}px)
+                                rotateY(-${coverFlowSettings.rotate + 10}deg)
+                            `;
+                            scale = coverFlowSettings.centerScale - 0.3;
+                            opacity = coverFlowSettings.sideOpacity * 0.4;
                             break;
 
                         default:
