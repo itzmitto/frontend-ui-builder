@@ -7,18 +7,18 @@ export default function Hero() {
         <section className="relative overflow-hidden">
             <div className="mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 text-center">
 
-                <div className="mb-8 rounded-full border border-blue-500/30 bg-blue-500/10 px-6 py-2 text-sm font-medium text-blue-400 backdrop-blur-md transition hover:scale-105">
+                <div className="animate-float mb-8 rounded-full border border-blue-500/30 bg-blue-500/10 px-6 py-2 text-sm font-medium text-blue-400 backdrop-blur-md transition hover:scale-105">
                     ✨ New • Visual Frontend UI Builder
                 </div>
 
                 <div className="relative">
 
-                    <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/20 blur-[120px]" />
+                    <div className="animate-glow absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-600/20 blur-[120px]" />
 
                     <h1 className="relative max-w-6xl text-6xl font-black leading-tight md:text-7xl xl:text-8xl">
                         Build Beautiful
 
-                        <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-500 bg-clip-text text-transparent">
+                        <span className="animate-gradient block bg-gradient-to-r from-blue-400 via-cyan-300 to-purple-500 bg-clip-text text-transparent">
                             Frontend Components
                         </span>
 
