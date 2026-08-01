@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
 
@@ -10,6 +11,69 @@ export default function CoverFlow() {
         setSelectedSlide,
         settings,
     } = useCarousel();
+
+    const nextSlide = () => {
+        setSelectedSlide((prev) =>
+            prev === slides.length - 1
+                ? settings.infinite
+                    ? 0
+                    : prev
+                : prev + 1
+        );
+    };
+
+    const previousSlide = () => {
+        setSelectedSlide((prev) =>
+            prev === 0
+                ? settings.infinite
+                    ? slides.length - 1
+                    : 0
+                : prev - 1
+        );
+    };
+
+    useEffect(() => {
+        if (!settings.autoplay || slides.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setSelectedSlide((prev) =>
+                prev === slides.length - 1
+                    ? settings.infinite
+                        ? 0
+                        : prev
+                    : prev + 1
+            );
+        }, settings.speed);
+
+        return () => clearInterval(interval);
+    }, [
+        settings.autoplay,
+        settings.speed,
+        settings.infinite,
+        slides.length,
+        setSelectedSlide,
+    ]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "ArrowRight") {
+                nextSlide();
+            }
+
+            if (event.key === "ArrowLeft") {
+                previousSlide();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [
+        slides.length,
+        settings.infinite,
+    ]);
 
     if (slides.length === 0) {
         return (
@@ -22,7 +86,7 @@ export default function CoverFlow() {
     }
 
     return (
-        <section className="flex flex-1 items-center justify-center bg-zinc-950 p-10">
+        <section className="relative flex flex-1 items-center justify-center bg-zinc-950 p-10">
             <div
                 className="relative flex h-full w-full items-center justify-center overflow-hidden"
                 style={{
@@ -64,7 +128,7 @@ export default function CoverFlow() {
                             transform = "translateX(180px) rotateY(-50deg)";
                             scale = 0.85;
                             opacity = 0.55;
-                            break;   
+                            break;
 
                         case 2:
                             transform = "translateX(360px) rotateY(-60deg)";
@@ -98,6 +162,40 @@ export default function CoverFlow() {
                     );
                 })}
             </div>
+
+            {settings.pagination && (
+                <div className="absolute bottom-24 left-1/2 flex -translate-x-1/2 gap-2">
+                    {slides.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setSelectedSlide(index)}
+                            className={`h-3 w-3 rounded-full transition-all ${
+                                selectedSlide === index
+                                    ? "scale-125 bg-blue-500"
+                                    : "bg-zinc-600 hover:bg-zinc-500"
+                            }`}
+                        />
+                    ))}
+                </div>
+            )}
+
+            {settings.navigation && (
+                <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 gap-4">
+                    <button
+                        onClick={previousSlide}
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-xl transition hover:scale-110 hover:bg-zinc-700"
+                    >
+                        ←
+                    </button>
+
+                    <button
+                        onClick={nextSlide}
+                        className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-xl transition hover:scale-110 hover:bg-zinc-700"
+                    >
+                        →
+                    </button>
+                </div>
+            )}
         </section>
     );
 }
