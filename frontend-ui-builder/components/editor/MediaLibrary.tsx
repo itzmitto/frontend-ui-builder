@@ -41,9 +41,30 @@ export default function MediaLibrary() {
         setSlides(updatedSlides);
     };
 
+    const deleteImage = (id: number) => {
+        const imageToDelete = media.find((image) => image.id === id);
+
+        setMedia((previous) =>
+            previous.filter((image) => image.id !== id)
+        );
+
+        if (
+            imageToDelete &&
+            slides[selectedSlide]?.image === imageToDelete.url
+        ) {
+            const updatedSlides = [...slides];
+
+            updatedSlides[selectedSlide] = {
+                ...updatedSlides[selectedSlide],
+                image: "",
+            };
+
+            setSlides(updatedSlides);
+        }
+    };
+
     return (
         <div className="space-y-4">
-
             <input
                 type="file"
                 accept="image/*"
@@ -65,11 +86,11 @@ export default function MediaLibrary() {
                                 slides[selectedSlide]?.image === image.url
                             }
                             onClick={() => selectImage(image.url)}
+                            onDelete={() => deleteImage(image.id)}
                         />
                     ))}
                 </div>
             )}
-
         </div>
     );
 }
