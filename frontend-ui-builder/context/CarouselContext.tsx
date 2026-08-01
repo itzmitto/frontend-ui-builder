@@ -12,6 +12,11 @@ import {
     defaultCarouselSettings,
 } from "@/lib/carousel";
 
+import {
+    CoverFlowSettings,
+    defaultCoverFlowSettings,
+} from "@/types/coverFlow";
+
 import { Slide } from "@/types/slide";
 import { Media } from "@/types/media";
 import { Device } from "@/types/device";
@@ -20,6 +25,11 @@ import { Template } from "@/types/template";
 type CarouselContextType = {
     settings: CarouselSettings;
     setSettings: React.Dispatch<React.SetStateAction<CarouselSettings>>;
+
+    coverFlowSettings: CoverFlowSettings;
+    setCoverFlowSettings: React.Dispatch<
+        React.SetStateAction<CoverFlowSettings>
+    >;
 
     slides: Slide[];
     setSlides: React.Dispatch<React.SetStateAction<Slide[]>>;
@@ -51,6 +61,9 @@ export function CarouselProvider({
     const [settings, setSettings] = useState(
         defaultCarouselSettings
     );
+
+    const [coverFlowSettings, setCoverFlowSettings] =
+        useState(defaultCoverFlowSettings);
 
     const [slides, setSlides] = useState<Slide[]>([
         {
@@ -84,14 +97,22 @@ export function CarouselProvider({
             value={{
                 settings,
                 setSettings,
+
+                coverFlowSettings,
+                setCoverFlowSettings,
+
                 slides,
                 setSlides,
+
                 selectedSlide,
                 setSelectedSlide,
+
                 media,
                 setMedia,
+
                 device,
                 setDevice,
+
                 selectedTemplate,
                 setSelectedTemplate,
             }}
