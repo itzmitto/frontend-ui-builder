@@ -71,3 +71,19 @@ body {
 .animate-cover-flow {
   animation: cover-flow 3.5s ease-in-out infinite;
 }
+
+@keyframes orbit {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+.animate-orbit {
+  animation: orbit 8s linear infinite;
+}
