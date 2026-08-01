@@ -3,6 +3,7 @@
 import { ChangeEvent } from "react";
 import { useCarousel } from "@/context/CarouselContext";
 import MediaCard from "./MediaCard";
+import DropZone from "./DropZone";
 
 export default function MediaLibrary() {
     const {
@@ -13,17 +14,21 @@ export default function MediaLibrary() {
         selectedSlide,
     } = useCarousel();
 
-    const uploadImage = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-
-        if (!file) return;
-
+    const addImage = (file: File) => {
         const image = {
             id: Date.now(),
             url: URL.createObjectURL(file),
         };
 
         setMedia((previous) => [...previous, image]);
+    };
+
+    const uploadImage = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+
+        if (!file) return;
+
+        addImage(file);
 
         event.target.value = "";
     };
@@ -42,7 +47,9 @@ export default function MediaLibrary() {
     };
 
     const deleteImage = (id: number) => {
-        const imageToDelete = media.find((image) => image.id === id);
+        const imageToDelete = media.find(
+            (image) => image.id === id
+        );
 
         setMedia((previous) =>
             previous.filter((image) => image.id !== id)
@@ -65,6 +72,9 @@ export default function MediaLibrary() {
 
     return (
         <div className="space-y-4">
+
+            <DropZone onFile={addImage} />
+
             <input
                 type="file"
                 accept="image/*"
@@ -91,6 +101,7 @@ export default function MediaLibrary() {
                     ))}
                 </div>
             )}
+
         </div>
     );
 }
