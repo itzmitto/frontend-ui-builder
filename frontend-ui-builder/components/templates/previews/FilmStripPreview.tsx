@@ -1,38 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-const colors = [
-    "bg-blue-500",
-    "bg-purple-500",
-    "bg-pink-500",
-];
-
 export default function FilmStripPreview() {
-    const [index, setIndex] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setIndex((prev) => (prev + 1) % colors.length);
-        }, 900);
-
-        return () => clearInterval(interval);
-    }, []);
-
     return (
-        <div className="flex h-full w-full items-center overflow-hidden rounded-lg bg-zinc-900">
-            <div
-                className="flex h-full transition-transform duration-500"
-                style={{
-                    transform: `translateX(-${index * 100}%)`,
-                }}
-            >
-                {colors.map((color, i) => (
-                    <div
-                        key={i}
-                        className={`h-full w-full flex-shrink-0 ${color}`}
-                    />
-                ))}
+        <div className="flex h-28 items-center justify-center overflow-hidden rounded-lg bg-zinc-900">
+            <div className="flex gap-2">
+                <div className="h-16 w-10 rounded bg-blue-500 transition-transform duration-300" />
+
+                <div className="h-20 w-12 rounded bg-blue-400 shadow-lg" />
+
+                <div className="h-16 w-10 rounded bg-blue-500 transition-transform duration-300" />
             </div>
         </div>
     );
