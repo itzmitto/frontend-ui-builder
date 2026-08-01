@@ -5,6 +5,7 @@ export type TemplateCategory = {
     templates: {
         id: Template;
         name: string;
+        description: string;
         image: string;
     }[];
 };
@@ -16,16 +17,19 @@ export const templateCategories: TemplateCategory[] = [
             {
                 id: "film-strip",
                 name: "Film Strip",
+                description: "Classic horizontal carousel",
                 image: "/templates/img1.png",
             },
             {
                 id: "cover-flow",
                 name: "Cover Flow",
+                description: "3D centered carousel",
                 image: "/templates/img1.png",
             },
             {
                 id: "cards",
                 name: "Cards",
+                description: "Stacked card carousel",
                 image: "/templates/img1.png",
             },
         ],
@@ -36,6 +40,7 @@ export const templateCategories: TemplateCategory[] = [
             {
                 id: "orbit",
                 name: "Orbit",
+                description: "Circular rotating slider",
                 image: "/templates/img1.png",
             },
         ],
@@ -46,11 +51,13 @@ export const templateCategories: TemplateCategory[] = [
             {
                 id: "gallery",
                 name: "Gallery",
+                description: "Responsive image gallery",
                 image: "/templates/img1.png",
             },
             {
                 id: "hero-slider",
                 name: "Hero Slider",
+                description: "Fullscreen hero carousel",
                 image: "/templates/img1.png",
             },
         ],

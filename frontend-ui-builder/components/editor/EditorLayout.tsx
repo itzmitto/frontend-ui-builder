@@ -2,7 +2,6 @@
 
 import TemplateSidebar from "./TemplateSidebar";
 import PropertyPanel from "./PropertyPanel";
-import Preview from "./FilmStrip";
 import Toolbar from "./Toolbar";
 import TemplateRenderer from "@/components/templates/renderer/TemplateRenderer";
 
