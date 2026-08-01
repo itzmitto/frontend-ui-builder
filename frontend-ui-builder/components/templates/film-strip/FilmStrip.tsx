@@ -15,10 +15,15 @@ export default function FilmStrip() {
 
     const previewWidth =
         device === "desktop"
-            ? 1000
+            ? 1200
             : device === "tablet"
-            ? 768
-            : 375;
+            ? 850
+            : 390;
+
+    const slideOffset =
+        previewWidth / 2 -
+        settings.width / 2 -
+        selectedSlide * (settings.width + settings.gap);
 
     const nextSlide = () => {
         setSelectedSlide((prev) =>
@@ -98,47 +103,57 @@ export default function FilmStrip() {
                         className="flex transition-transform duration-500 ease-in-out"
                         style={{
                             gap: settings.gap,
-                            transform: `translateX(-${
-                                selectedSlide *
-                                (settings.width + settings.gap)
-                            }px)`,
+                            transform: `translateX(${slideOffset}px)`,
                         }}
                     >
-                        {slides.map((slide) => (
-                            <div
-                                key={slide.id}
-                                style={{
-                                    width: settings.width,
-                                    height: settings.height,
-                                    flexShrink: 0,
-                                    overflow: "hidden",
-                                    borderRadius: settings.borderRadius,
-                                }}
-                            >
-                                <Image
-                                    src={slide.image}
-                                    alt={slide.title}
-                                    width={settings.width}
-                                    height={settings.height}
-                                    className="h-full w-full object-cover"
-                                />
-                            </div>
-                        ))}
+                        {slides.map((slide, index) => {
+                            const active = selectedSlide === index;
+
+                            return (
+                                <div
+                                    key={slide.id}
+                                    className={`group relative transition-all duration-500 hover:-translate-y-2 hover:scale-105 ${
+                                        active
+                                            ? "z-20 scale-100 opacity-100"
+                                            : "z-10 scale-95 opacity-70"
+                                    }`}
+                                    style={{
+                                        width: settings.width,
+                                        height: settings.height,
+                                        flexShrink: 0,
+                                        overflow: "hidden",
+                                        borderRadius:
+                                            settings.borderRadius,
+                                        boxShadow: active
+                                            ? "0 25px 70px rgba(0,0,0,.55)"
+                                            : "0 10px 25px rgba(0,0,0,.20)",
+                                    }}
+                                >
+                                    <Image
+                                        src={slide.image}
+                                        alt={slide.title}
+                                        width={settings.width}
+                                        height={settings.height}
+                                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 
                 {settings.navigation && (
-                    <div className="mt-6 flex justify-center gap-4">
+                    <div className="mt-8 flex justify-center gap-5">
                         <button
                             onClick={previousSlide}
-                            className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-800 text-lg transition hover:bg-zinc-700"
+                            className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-xl transition hover:scale-110 hover:bg-zinc-700"
                         >
                             ←
                         </button>
 
                         <button
                             onClick={nextSlide}
-                            className="flex h-11 w-11 items-center justify-center rounded-full bg-zinc-800 text-lg transition hover:bg-zinc-700"
+                            className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-xl transition hover:scale-110 hover:bg-zinc-700"
                         >
                             →
                         </button>
@@ -146,15 +161,15 @@ export default function FilmStrip() {
                 )}
 
                 {settings.pagination && (
-                    <div className="mt-5 flex justify-center gap-2">
+                    <div className="mt-6 flex justify-center gap-2">
                         {slides.map((_, index) => (
                             <button
                                 key={index}
                                 onClick={() => setSelectedSlide(index)}
-                                className={`h-3 w-3 rounded-full transition ${
+                                className={`h-3 w-3 rounded-full transition-all ${
                                     selectedSlide === index
-                                        ? "bg-blue-500"
-                                        : "bg-zinc-600 hover:bg-zinc-500"
+                                        ? "scale-125 bg-blue-500"
+                                        : "bg-zinc-600 hover:scale-110 hover:bg-zinc-500"
                                 }`}
                             />
                         ))}
