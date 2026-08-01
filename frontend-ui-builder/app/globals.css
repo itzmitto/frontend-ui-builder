@@ -24,3 +24,50 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+@keyframes film-strip {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-24px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-film-strip {
+  animation: film-strip 4s ease-in-out infinite;
+}
+
+@keyframes cover-flow {
+
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.05) translateX(-4px);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  75% {
+    transform: scale(1.05) translateX(4px);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+.animate-cover-flow {
+  animation: cover-flow 3.5s ease-in-out infinite;
+}
