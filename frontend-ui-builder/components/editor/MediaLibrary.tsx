@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { ChangeEvent } from "react";
 import { useCarousel } from "@/context/CarouselContext";
+import MediaCard from "./MediaCard";
 
 export default function MediaLibrary() {
     const {
@@ -23,10 +23,14 @@ export default function MediaLibrary() {
             url: URL.createObjectURL(file),
         };
 
-        setMedia([...media, image]);
+        setMedia((previous) => [...previous, image]);
+
+        event.target.value = "";
     };
 
     const selectImage = (url: string) => {
+        if (!slides[selectedSlide]) return;
+
         const updatedSlides = [...slides];
 
         updatedSlides[selectedSlide] = {
@@ -39,30 +43,33 @@ export default function MediaLibrary() {
 
     return (
         <div className="space-y-4">
+
             <input
                 type="file"
                 accept="image/*"
                 onChange={uploadImage}
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 p-2"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 p-2 text-sm transition hover:border-zinc-500"
             />
 
-            <div className="grid grid-cols-2 gap-3">
-                {media.map((image) => (
-                    <button
-                        key={image.id}
-                        onClick={() => selectImage(image.url)}
-                        className="overflow-hidden rounded-lg border border-zinc-700 hover:border-blue-500"
-                    >
-                        <Image
-                            src={image.url}
-                            alt=""
-                            width={150}
-                            height={100}
-                            className="h-24 w-full object-cover"
+            {media.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-zinc-700 p-8 text-center text-sm text-zinc-500">
+                    No images uploaded yet.
+                </div>
+            ) : (
+                <div className="grid grid-cols-2 gap-3">
+                    {media.map((image) => (
+                        <MediaCard
+                            key={image.id}
+                            image={image}
+                            selected={
+                                slides[selectedSlide]?.image === image.url
+                            }
+                            onClick={() => selectImage(image.url)}
                         />
-                    </button>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
+
         </div>
     );
 }
