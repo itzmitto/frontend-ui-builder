@@ -9,8 +9,9 @@ import Footer from "@/components/home/Footer";
 export default function HomePage() {
     return (
         <main className="relative overflow-hidden bg-[#09090b] text-white">
-
             <div className="absolute inset-0 -z-10">
+
+                <div className="background-grid" />
 
                 <div className="absolute left-[-250px] top-[-250px] h-[700px] w-[700px] rounded-full bg-blue-600/15 blur-[180px]" />
 
@@ -33,7 +34,6 @@ export default function HomePage() {
             <Stats />
 
             <Footer />
-
         </main>
     );
 }
