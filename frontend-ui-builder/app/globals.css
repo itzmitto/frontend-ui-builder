@@ -110,3 +110,26 @@ body {
 .animate-gallery {
   animation: gallery 2.5s ease-in-out infinite;
 }
+
+@keyframes hero {
+
+  0% {
+    transform: scale(1);
+    opacity: .8;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: .8;
+  }
+
+}
+
+.animate-hero {
+  animation: hero 3s ease-in-out infinite;
+}
