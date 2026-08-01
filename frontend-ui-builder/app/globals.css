@@ -87,3 +87,26 @@ body {
 .animate-orbit {
   animation: orbit 8s linear infinite;
 }
+
+@keyframes gallery {
+
+  0% {
+    transform: scale(1);
+    opacity: .8;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: .8;
+  }
+
+}
+
+.animate-gallery {
+  animation: gallery 2.5s ease-in-out infinite;
+}
