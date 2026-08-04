@@ -1,6 +1,7 @@
 "use client";
 
 import EditorWindow from "./editor-mockup/EditorWindow";
+import EditorSidebar from "./editor-mockup/EditorSidebar";
 
 export default function EditorMockup() {
     return (
@@ -9,11 +10,17 @@ export default function EditorMockup() {
 
                 <EditorWindow>
 
-                    <div className="flex h-[650px] items-center justify-center">
+                    <div className="flex h-[650px]">
 
-                        <h2 className="text-4xl font-bold text-zinc-700">
-                            Interactive Editor Preview
-                        </h2>
+                        <EditorSidebar />
+
+                        <div className="flex flex-1 items-center justify-center">
+
+                            <h2 className="text-4xl font-bold text-zinc-700">
+                                Live Preview
+                            </h2>
+
+                        </div>
 
                     </div>
 
