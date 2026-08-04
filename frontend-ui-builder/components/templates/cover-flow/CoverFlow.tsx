@@ -1,90 +1,54 @@
 "use client";
 
-import { useEffect } from "react";
 import Image from "next/image";
+
 import { useCarousel } from "@/context/CarouselContext";
+
+import CarouselViewport from "@/components/carousel/CarouselViewport";
+import CarouselNavigation from "@/components/carousel/CarouselNavigation";
+import CarouselPagination from "@/components/carousel/CarouselPagination";
+import useCarouselEngine from "@/components/carousel/useCarouselEngine";
 
 export default function CoverFlow() {
     const {
         slides,
+        settings,
         selectedSlide,
         setSelectedSlide,
-        settings,
-        coverFlowSettings,
     } = useCarousel();
 
-    const nextSlide = () => {
-        setSelectedSlide((prev) =>
-            prev === slides.length - 1
-                ? settings.infinite
-                    ? 0
-                    : prev
-                : prev + 1
-        );
-    };
-
-    const previousSlide = () => {
-        setSelectedSlide((prev) =>
-            prev === 0
-                ? settings.infinite
-                    ? slides.length - 1
-                    : 0
-                : prev - 1
-        );
-    };
-
-    useEffect(() => {
-        if (!settings.autoplay || slides.length <= 1) return;
-
-        const interval = setInterval(() => {
-            nextSlide();
-        }, settings.speed);
-
-        return () => clearInterval(interval);
-    }, [
-        settings.autoplay,
-        settings.speed,
-        settings.infinite,
-        slides.length,
-    ]);
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "ArrowRight") {
-                nextSlide();
-            }
-
-            if (event.key === "ArrowLeft") {
-                previousSlide();
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [
-        slides.length,
-        settings.infinite,
-    ]);
+    const {
+        nextSlide,
+        previousSlide,
+        goToSlide,
+    } = useCarouselEngine({
+        autoplay: settings.autoplay,
+        infinite: settings.infinite,
+        speed: settings.speed,
+        slideCount: slides.length,
+        selectedSlide,
+        setSelectedSlide,
+    });
 
     if (slides.length === 0) {
         return (
-            <section className="flex flex-1 items-center justify-center bg-zinc-950">
-                <p className="text-zinc-400">
-                    No slides available.
-                </p>
-            </section>
+            <CarouselViewport>
+                <div className="flex h-[500px] items-center justify-center">
+                    <p className="text-zinc-400">
+                        No slides available.
+                    </p>
+                </div>
+            </CarouselViewport>
         );
     }
 
     return (
-        <section className="relative flex flex-1 items-center justify-center bg-zinc-950 p-10">
+        <CarouselViewport>
+
             <div
-                className="relative flex h-full w-full items-center justify-center overflow-hidden"
+                className="relative flex h-[600px] items-center justify-center overflow-hidden"
                 style={{
-                    perspective: `${coverFlowSettings.perspective}px`,
+                    perspective: "1800px",
                 }}
             >
                 {slides.map((slide, index) => {
@@ -102,63 +66,40 @@ export default function CoverFlow() {
 
                     switch (offset) {
                         case -2:
-                            transform = `
-                                translateX(-${coverFlowSettings.spacing * 2}px)
-                                translateZ(-${coverFlowSettings.depth * 2}px)
-                                rotateY(${coverFlowSettings.rotate + 10}deg)
-                            `;
-                            scale = coverFlowSettings.centerScale - 0.3;
-                            opacity = coverFlowSettings.sideOpacity * 0.4;
+                            transform = "translateX(-360px) rotateY(60deg)";
+                            scale = .7;
+                            opacity = .2;
                             break;
 
                         case -1:
-                            transform = `
-                                translateX(-${coverFlowSettings.spacing}px)
-                                translateZ(-${coverFlowSettings.depth}px)
-                                rotateY(${coverFlowSettings.rotate}deg)
-                            `;
-                            scale = coverFlowSettings.centerScale - 0.15;
-                            opacity = coverFlowSettings.sideOpacity;
+                            transform = "translateX(-180px) rotateY(50deg)";
+                            scale = .85;
+                            opacity = .55;
                             break;
 
                         case 0:
-                            transform = `
-                                translateX(0px)
-                                translateZ(0px)
-                                rotateY(0deg)
-                            `;
-                            scale = coverFlowSettings.centerScale;
+                            transform = "translateX(0px) rotateY(0deg)";
+                            scale = 1;
                             opacity = 1;
                             break;
 
                         case 1:
-                            transform = `
-                                translateX(${coverFlowSettings.spacing}px)
-                                translateZ(-${coverFlowSettings.depth}px)
-                                rotateY(-${coverFlowSettings.rotate}deg)
-                            `;
-                            scale = coverFlowSettings.centerScale - 0.15;
-                            opacity = coverFlowSettings.sideOpacity;
+                            transform = "translateX(180px) rotateY(-50deg)";
+                            scale = .85;
+                            opacity = .55;
                             break;
 
                         case 2:
-                            transform = `
-                                translateX(${coverFlowSettings.spacing * 2}px)
-                                translateZ(-${coverFlowSettings.depth * 2}px)
-                                rotateY(-${coverFlowSettings.rotate + 10}deg)
-                            `;
-                            scale = coverFlowSettings.centerScale - 0.3;
-                            opacity = coverFlowSettings.sideOpacity * 0.4;
-                            break;
-
-                        default:
+                            transform = "translateX(360px) rotateY(-60deg)";
+                            scale = .7;
+                            opacity = .2;
                             break;
                     }
 
                     return (
                         <button
                             key={slide.id}
-                            onClick={() => setSelectedSlide(index)}
+                            onClick={() => goToSlide(index)}
                             className="absolute transition-all duration-500 ease-out"
                             style={{
                                 transform: `${transform} scale(${scale})`,
@@ -178,39 +119,19 @@ export default function CoverFlow() {
                 })}
             </div>
 
-            {settings.pagination && (
-                <div className="absolute bottom-24 left-1/2 flex -translate-x-1/2 gap-2">
-                    {slides.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setSelectedSlide(index)}
-                            className={`h-3 w-3 rounded-full transition-all ${
-                                selectedSlide === index
-                                    ? "scale-125 bg-blue-500"
-                                    : "bg-zinc-600 hover:bg-zinc-500"
-                            }`}
-                        />
-                    ))}
-                </div>
-            )}
+            <CarouselPagination
+                show={settings.pagination}
+                total={slides.length}
+                current={selectedSlide}
+                onSelect={goToSlide}
+            />
 
-            {settings.navigation && (
-                <div className="absolute bottom-10 left-1/2 flex -translate-x-1/2 gap-4">
-                    <button
-                        onClick={previousSlide}
-                        className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-xl transition hover:scale-110 hover:bg-zinc-700"
-                    >
-                        ←
-                    </button>
+            <CarouselNavigation
+                show={settings.navigation}
+                onPrevious={previousSlide}
+                onNext={nextSlide}
+            />
 
-                    <button
-                        onClick={nextSlide}
-                        className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-xl transition hover:scale-110 hover:bg-zinc-700"
-                    >
-                        →
-                    </button>
-                </div>
-            )}
-        </section>
+        </CarouselViewport>
     );
 }
