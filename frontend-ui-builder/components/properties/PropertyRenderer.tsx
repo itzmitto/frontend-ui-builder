@@ -1,7 +1,9 @@
 "use client";
 
 import { useCarousel } from "@/context/CarouselContext";
+
 import FilmStripSettings from "@/components/templates/film-strip/FilmStripSettings";
+import GallerySettings from "@/components/templates/gallery/GallerySettings";
 
 function ComingSoon({ title }: { title: string }) {
     return (
@@ -27,14 +29,14 @@ export default function PropertyRenderer() {
         case "cover-flow":
             return <ComingSoon title="Cover Flow" />;
 
-        case "orbit":
-            return <ComingSoon title="Orbit" />;
+        case "gallery":
+            return <GallerySettings />;
 
         case "cards":
             return <ComingSoon title="Cards" />;
 
-        case "gallery":
-            return <ComingSoon title="Gallery" />;
+        case "orbit":
+            return <ComingSoon title="Orbit" />;
 
         case "hero-slider":
             return <ComingSoon title="Hero Slider" />;
