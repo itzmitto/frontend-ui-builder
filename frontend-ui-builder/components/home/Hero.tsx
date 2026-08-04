@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Hero() {
     return (
         <section className="relative overflow-hidden">
-            <div className="mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 text-center">
+            <div className="mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 pt-24 text-center">
 
                 <div className="animate-float mb-8 rounded-full border border-blue-500/30 bg-blue-500/10 px-6 py-2 text-sm font-medium text-blue-400 backdrop-blur-md transition hover:scale-105">
                     ✨ New • Visual Frontend UI Builder
