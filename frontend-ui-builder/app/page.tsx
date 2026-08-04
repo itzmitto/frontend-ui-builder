@@ -5,13 +5,10 @@ import TemplateShowcase from "@/components/home/TemplateShowcase";
 import HowItWorks from "@/components/home/HowItWorks";
 import Stats from "@/components/home/Stats";
 import Footer from "@/components/home/Footer";
-import Navbar from "@/components/layout/Navbar";
 
 export default function HomePage() {
     return (
         <main className="relative overflow-hidden bg-[#09090b] text-white">
-
-            <Navbar />
 
             <div className="absolute inset-0 -z-10">
 
@@ -26,17 +23,11 @@ export default function HomePage() {
             </div>
 
             <Hero />
-
             <EditorMockup />
-
             <Features />
-
             <TemplateShowcase />
-
             <HowItWorks />
-
             <Stats />
-
             <Footer />
 
         </main>
