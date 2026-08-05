@@ -72,6 +72,9 @@ export function CarouselProvider({
             buttonText: "Learn More",
             buttonLink: "#",
             image: "https://picsum.photos/800/500?random=1",
+            animation: "fade",
+            duration: 500,
+            delay: 0,
         },
         {
             id: 2,
@@ -80,6 +83,9 @@ export function CarouselProvider({
             buttonText: "Explore",
             buttonLink: "#",
             image: "https://picsum.photos/800/500?random=2",
+            animation: "fade",
+            duration: 500,
+            delay: 0,
         },
         {
             id: 3,
@@ -88,6 +94,9 @@ export function CarouselProvider({
             buttonText: "Discover",
             buttonLink: "#",
             image: "https://picsum.photos/800/500?random=3",
+            animation: "fade",
+            duration: 500,
+            delay: 0,
         },
     ]);
 

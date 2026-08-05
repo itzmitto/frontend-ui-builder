@@ -4,8 +4,10 @@ import { useCarousel } from "@/context/CarouselContext";
 
 import FilmStripSettings from "@/components/templates/film-strip/FilmStripSettings";
 import GallerySettings from "@/components/templates/gallery/GallerySettings";
+
 import SlideProperties from "./SlideProperties";
 import InspectorSection from "./InspectorSection";
+import AnimationPanel from "./AnimationPanel";
 
 function ComingSoon({ title }: { title: string }) {
     return (
@@ -31,8 +33,13 @@ export default function PropertyRenderer() {
                     <InspectorSection title="Content">
                         <SlideProperties />
                     </InspectorSection>
+
                     <InspectorSection title="Carousel">
                         <FilmStripSettings />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
                     </InspectorSection>
                 </>
             );
@@ -40,48 +47,102 @@ export default function PropertyRenderer() {
         case "gallery":
             return (
                 <>
-                    <SlideProperties />
-                    <GallerySettings />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Gallery">
+                        <GallerySettings />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
                 </>
             );
 
         case "cover-flow":
             return (
                 <>
-                    <SlideProperties />
-                    <ComingSoon title="Cover Flow" />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Cover Flow">
+                        <ComingSoon title="Cover Flow" />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
                 </>
             );
 
         case "cards":
             return (
                 <>
-                    <SlideProperties />
-                    <ComingSoon title="Cards" />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Cards">
+                        <ComingSoon title="Cards" />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
                 </>
             );
 
         case "orbit":
             return (
                 <>
-                    <SlideProperties />
-                    <ComingSoon title="Orbit" />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Orbit">
+                        <ComingSoon title="Orbit" />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
                 </>
             );
 
         case "hero-slider":
             return (
                 <>
-                    <SlideProperties />
-                    <ComingSoon title="Hero Slider" />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Hero Slider">
+                        <ComingSoon title="Hero Slider" />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
                 </>
             );
 
         default:
             return (
                 <>
-                    <SlideProperties />
-                    <FilmStripSettings />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Carousel">
+                        <FilmStripSettings />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
                 </>
             );
     }
