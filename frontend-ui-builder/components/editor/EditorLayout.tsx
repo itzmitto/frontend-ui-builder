@@ -4,6 +4,7 @@ import TemplateSidebar from "./TemplateSidebar";
 import PropertyPanel from "./PropertyPanel";
 import Toolbar from "./Toolbar";
 import TemplateRenderer from "@/components/templates/renderer/TemplateRenderer";
+import LayersPanel from "./LayersPanel";
 
 export default function EditorLayout() {
     return (
@@ -16,7 +17,17 @@ export default function EditorLayout() {
                 <TemplateRenderer />
             </main>
 
-            <PropertyPanel />
+            <div className="flex w-96 flex-col border-l border-zinc-800 bg-zinc-950">
+
+                <div className="flex-1 overflow-y-auto">
+                    <PropertyPanel />
+                </div>
+
+                <div className="border-t border-zinc-800 p-4">
+                    <LayersPanel />
+                </div>
+
+            </div>
         </div>
     );
 }
