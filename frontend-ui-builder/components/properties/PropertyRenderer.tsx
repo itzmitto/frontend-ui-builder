@@ -5,6 +5,7 @@ import { useCarousel } from "@/context/CarouselContext";
 import FilmStripSettings from "@/components/templates/film-strip/FilmStripSettings";
 import GallerySettings from "@/components/templates/gallery/GallerySettings";
 import SlideProperties from "./SlideProperties";
+import InspectorSection from "./InspectorSection";
 
 function ComingSoon({ title }: { title: string }) {
     return (
@@ -27,8 +28,12 @@ export default function PropertyRenderer() {
         case "film-strip":
             return (
                 <>
-                    <SlideProperties />
-                    <FilmStripSettings />
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+                    <InspectorSection title="Carousel">
+                        <FilmStripSettings />
+                    </InspectorSection>
                 </>
             );
 
