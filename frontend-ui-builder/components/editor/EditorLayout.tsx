@@ -6,6 +6,7 @@ import Toolbar from "./Toolbar";
 import AssetsPanel from "./AssetsPanel";
 import LayersPanel from "./LayersPanel";
 import HistoryPanel from "./HistoryPanel";
+import ThemePanel from "./ThemePanel";
 
 import TemplateRenderer from "@/components/templates/renderer/TemplateRenderer";
 
@@ -25,7 +26,7 @@ export default function EditorLayout() {
                     <div className="space-y-4">
                         <AssetsPanel />
                         <LayersPanel />
-                        <HistoryPanel />
+                        <ThemePanel />
                     </div>
                 </div>
             </aside>
