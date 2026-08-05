@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
 
 import CarouselViewport from "@/components/carousel/CarouselViewport";
+import CarouselContainer from "@/components/carousel/CarouselContainer";
 import CarouselNavigation from "@/components/carousel/CarouselNavigation";
 import CarouselPagination from "@/components/carousel/CarouselPagination";
 import useCarouselEngine from "@/components/carousel/useCarouselEngine";
@@ -45,92 +46,96 @@ export default function CoverFlow() {
     return (
         <CarouselViewport>
 
-            <div
-                className="relative flex h-[600px] items-center justify-center overflow-hidden"
-                style={{
-                    perspective: "1800px",
-                }}
-            >
-                {slides.map((slide, index) => {
-                    const offset = index - selectedSlide;
+            <CarouselContainer>
 
-                    if (Math.abs(offset) > 2) {
-                        return null;
-                    }
+                <div
+                    className="relative flex h-[600px] items-center justify-center overflow-hidden"
+                    style={{
+                        perspective: "1800px",
+                    }}
+                >
+                    {slides.map((slide, index) => {
+                        const offset = index - selectedSlide;
 
-                    let transform = "";
-                    let opacity = 1;
-                    let scale = 1;
+                        if (Math.abs(offset) > 2) {
+                            return null;
+                        }
 
-                    const zIndex = 100 - Math.abs(offset);
+                        let transform = "";
+                        let opacity = 1;
+                        let scale = 1;
 
-                    switch (offset) {
-                        case -2:
-                            transform = "translateX(-360px) rotateY(60deg)";
-                            scale = .7;
-                            opacity = .2;
-                            break;
+                        const zIndex = 100 - Math.abs(offset);
 
-                        case -1:
-                            transform = "translateX(-180px) rotateY(50deg)";
-                            scale = .85;
-                            opacity = .55;
-                            break;
+                        switch (offset) {
+                            case -2:
+                                transform = "translateX(-360px) rotateY(60deg)";
+                                scale = 0.7;
+                                opacity = 0.2;
+                                break;
 
-                        case 0:
-                            transform = "translateX(0px) rotateY(0deg)";
-                            scale = 1;
-                            opacity = 1;
-                            break;
+                            case -1:
+                                transform = "translateX(-180px) rotateY(50deg)";
+                                scale = 0.85;
+                                opacity = 0.55;
+                                break;
 
-                        case 1:
-                            transform = "translateX(180px) rotateY(-50deg)";
-                            scale = .85;
-                            opacity = .55;  
-                            break;
+                            case 0:
+                                transform = "translateX(0px) rotateY(0deg)";
+                                scale = 1;
+                                opacity = 1;
+                                break;
 
-                        case 2:
-                            transform = "translateX(360px) rotateY(-60deg)";
-                            scale = .7;
-                            opacity = .2;
-                            break;
-                    }
+                            case 1:
+                                transform = "translateX(180px) rotateY(-50deg)";
+                                scale = 0.85;
+                                opacity = 0.55;
+                                break;
 
-                    return (
-                        <button
-                            key={slide.id}
-                            onClick={() => goToSlide(index)}
-                            className="absolute transition-all duration-500 ease-out"
-                            style={{
-                                transform: `${transform} scale(${scale})`,
-                                opacity,
-                                zIndex,
-                            }}
-                        >
-                            <Image
-                                src={slide.image}
-                                alt={slide.title}
-                                width={settings.width}
-                                height={settings.height}
-                                className="rounded-2xl object-cover shadow-2xl"
-                            />
-                        </button>
-                    );
-                })}
-            </div>
+                            case 2:
+                                transform = "translateX(360px) rotateY(-60deg)";
+                                scale = 0.7;
+                                opacity = 0.2;
+                                break;
+                        }
 
-            <CarouselPagination
-                show={settings.pagination}
-                total={slides.length}
-                current={selectedSlide}
-                onSelect={goToSlide}
-            />
+                        return (
+                            <button
+                                key={slide.id}
+                                onClick={() => goToSlide(index)}
+                                className="absolute transition-all duration-500 ease-out"
+                                style={{
+                                    transform: `${transform} scale(${scale})`,
+                                    opacity,
+                                    zIndex,
+                                }}
+                            >
+                                <Image
+                                    src={slide.image}
+                                    alt={slide.title}
+                                    width={settings.width}
+                                    height={settings.height}
+                                    className="rounded-2xl object-cover shadow-2xl"
+                                />
+                            </button>
+                        );
+                    })}
+                </div>
 
-            <CarouselNavigation
-                show={settings.navigation}
-                onPrevious={previousSlide}
-                onNext={nextSlide}
-            />
+                <CarouselPagination
+                    show={settings.pagination}
+                    total={slides.length}
+                    current={selectedSlide}
+                    onSelect={goToSlide}
+                />
+
+                <CarouselNavigation
+                    show={settings.navigation}
+                    onPrevious={previousSlide}
+                    onNext={nextSlide}
+                />
+
+            </CarouselContainer>
 
         </CarouselViewport>
     );

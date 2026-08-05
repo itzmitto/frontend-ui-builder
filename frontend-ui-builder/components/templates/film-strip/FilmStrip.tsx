@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
 
 import CarouselViewport from "@/components/carousel/CarouselViewport";
+import CarouselContainer from "@/components/carousel/CarouselContainer";
 import CarouselNavigation from "@/components/carousel/CarouselNavigation";
 import CarouselPagination from "@/components/carousel/CarouselPagination";
 import useCarouselEngine from "@/components/carousel/useCarouselEngine";
@@ -53,7 +54,7 @@ export default function FilmStrip() {
     return (
         <CarouselViewport>
 
-            <div className="rounded-2xl border border-zinc-700 bg-zinc-900 p-8">
+            <CarouselContainer>
 
                 <div
                     className="overflow-hidden"
@@ -66,10 +67,7 @@ export default function FilmStrip() {
                         className="flex transition-transform duration-500 ease-in-out"
                         style={{
                             gap: settings.gap,
-                            transform: `translateX(-${
-                                selectedSlide *
-                                (settings.width + settings.gap)
-                            }px)`,
+                            transform: `translateX(-${selectedSlide * (settings.width + settings.gap)}px)`,
                         }}
                     >
                         {slides.map((slide, index) => (
@@ -117,7 +115,7 @@ export default function FilmStrip() {
                     onSelect={goToSlide}
                 />
 
-            </div>
+            </CarouselContainer>
 
         </CarouselViewport>
     );

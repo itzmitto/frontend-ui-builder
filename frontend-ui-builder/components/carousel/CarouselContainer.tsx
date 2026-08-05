@@ -11,9 +11,7 @@ export default function CarouselContainer({
 }: CarouselContainerProps) {
     return (
         <div className="rounded-2xl border border-zinc-700 bg-zinc-900 p-8 shadow-2xl">
-
             {children}
-
         </div>
     );
 }
