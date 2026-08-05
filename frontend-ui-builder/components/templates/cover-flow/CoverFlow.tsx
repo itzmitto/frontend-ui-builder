@@ -86,7 +86,7 @@ export default function CoverFlow() {
                         case 1:
                             transform = "translateX(180px) rotateY(-50deg)";
                             scale = .85;
-                            opacity = .55;
+                            opacity = .55;  
                             break;
 
                         case 2:
