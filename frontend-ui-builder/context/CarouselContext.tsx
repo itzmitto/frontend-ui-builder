@@ -49,9 +49,8 @@ type CarouselContextType = {
     >;
 };
 
-const CarouselContext = createContext<CarouselContextType | null>(
-    null
-);
+const CarouselContext =
+    createContext<CarouselContextType | null>(null);
 
 export function CarouselProvider({
     children,
@@ -69,25 +68,36 @@ export function CarouselProvider({
         {
             id: 1,
             title: "Mountain",
+            description: "Beautiful mountain landscape.",
+            buttonText: "Learn More",
+            buttonLink: "#",
             image: "https://picsum.photos/800/500?random=1",
         },
         {
             id: 2,
             title: "Forest",
+            description: "Deep green forest.",
+            buttonText: "Explore",
+            buttonLink: "#",
             image: "https://picsum.photos/800/500?random=2",
         },
         {
             id: 3,
             title: "Ocean",
+            description: "Crystal blue ocean.",
+            buttonText: "Discover",
+            buttonLink: "#",
             image: "https://picsum.photos/800/500?random=3",
         },
     ]);
 
-    const [selectedSlide, setSelectedSlide] = useState(0);
+    const [selectedSlide, setSelectedSlide] =
+        useState(0);
 
     const [media, setMedia] = useState<Media[]>([]);
 
-    const [device, setDevice] = useState<Device>("desktop");
+    const [device, setDevice] =
+        useState<Device>("desktop");
 
     const [selectedTemplate, setSelectedTemplate] =
         useState<Template>("film-strip");

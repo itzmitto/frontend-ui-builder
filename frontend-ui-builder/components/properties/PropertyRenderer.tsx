@@ -2,125 +2,82 @@
 
 import { useCarousel } from "@/context/CarouselContext";
 
-export default function SlideProperties() {
-    const {
-        slides,
-        selectedSlide,
-        setSlides,
-    } = useCarousel();
+import FilmStripSettings from "@/components/templates/film-strip/FilmStripSettings";
+import GallerySettings from "@/components/templates/gallery/GallerySettings";
+import SlideProperties from "./SlideProperties";
 
-    const slide = slides[selectedSlide];
-
-    if (!slide) {
-        return null;
-    }
-
-    const updateSlide = (
-        key: keyof typeof slide,
-        value: string
-    ) => {
-        const updated = [...slides];
-
-        updated[selectedSlide] = {
-            ...slide,
-            [key]: value,
-        };
-
-        setSlides(updated);
-    };
-
+function ComingSoon({ title }: { title: string }) {
     return (
-        <div className="space-y-6">
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
+            <h2 className="text-lg font-semibold text-white">
+                {title}
+            </h2>
 
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
-
-                <h2 className="mb-4 text-lg font-semibold">
-                    Slide
-                </h2>
-
-                <div className="space-y-5">
-
-                    <div>
-
-                        <label className="mb-2 block text-sm text-zinc-400">
-                            Title
-                        </label>
-
-                        <input
-                            value={slide.title}
-                            onChange={(e) =>
-                                updateSlide(
-                                    "title",
-                                    e.target.value
-                                )
-                            }
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2"
-                        />
-
-                    </div>
-
-                    <div>
-
-                        <label className="mb-2 block text-sm text-zinc-400">
-                            Description
-                        </label>
-
-                        <textarea
-                            rows={4}
-                            value={slide.description}
-                            onChange={(e) =>
-                                updateSlide(
-                                    "description",
-                                    e.target.value
-                                )
-                            }
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2"
-                        />
-
-                    </div>
-
-                    <div>
-
-                        <label className="mb-2 block text-sm text-zinc-400">
-                            Button Text
-                        </label>
-
-                        <input
-                            value={slide.buttonText}
-                            onChange={(e) =>
-                                updateSlide(
-                                    "buttonText",
-                                    e.target.value
-                                )
-                            }
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2"
-                        />
-
-                    </div>
-
-                    <div>
-
-                        <label className="mb-2 block text-sm text-zinc-400">
-                            Button Link
-                        </label>
-
-                        <input
-                            value={slide.buttonLink}
-                            onChange={(e) =>
-                                updateSlide(
-                                    "buttonLink",
-                                    e.target.value
-                                )
-                            }
-                            className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2"
-                        />
-
-                    </div>
-
-                </div>
-
-            </div>
-
+            <p className="mt-2 text-sm text-zinc-400">
+                Settings coming soon.
+            </p>
         </div>
     );
+}
+
+export default function PropertyRenderer() {
+    const { selectedTemplate } = useCarousel();
+
+    switch (selectedTemplate) {
+        case "film-strip":
+            return (
+                <>
+                    <SlideProperties />
+                    <FilmStripSettings />
+                </>
+            );
+
+        case "gallery":
+            return (
+                <>
+                    <SlideProperties />
+                    <GallerySettings />
+                </>
+            );
+
+        case "cover-flow":
+            return (
+                <>
+                    <SlideProperties />
+                    <ComingSoon title="Cover Flow" />
+                </>
+            );
+
+        case "cards":
+            return (
+                <>
+                    <SlideProperties />
+                    <ComingSoon title="Cards" />
+                </>
+            );
+
+        case "orbit":
+            return (
+                <>
+                    <SlideProperties />
+                    <ComingSoon title="Orbit" />
+                </>
+            );
+
+        case "hero-slider":
+            return (
+                <>
+                    <SlideProperties />
+                    <ComingSoon title="Hero Slider" />
+                </>
+            );
+
+        default:
+            return (
+                <>
+                    <SlideProperties />
+                    <FilmStripSettings />
+                </>
+            );
+    }
 }
