@@ -5,6 +5,7 @@ import { useCarousel } from "@/context/CarouselContext";
 import FilmStrip from "@/components/templates/film-strip/FilmStrip";
 import CoverFlow from "@/components/templates/cover-flow/CoverFlow";
 import Gallery from "@/components/templates/gallery/Gallery";
+import Cards from "@/components/templates/cards/Cards";
 
 function ComingSoon({ title }: { title: string }) {
     return (
@@ -38,7 +39,7 @@ export default function TemplateRenderer() {
             return <Gallery />;
 
         case "cards":
-            return <ComingSoon title="Cards" />;
+            return <Cards />;
 
         case "orbit":
             return <ComingSoon title="Orbit" />;
