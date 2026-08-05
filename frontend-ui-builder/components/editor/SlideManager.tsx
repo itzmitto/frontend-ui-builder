@@ -1,7 +1,22 @@
 "use client";
 
+import {
+    DndContext,
+    DragEndEvent,
+    PointerSensor,
+    closestCenter,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
+
+import {
+    SortableContext,
+    arrayMove,
+    verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+
 import { useCarousel } from "@/context/CarouselContext";
-import SlideItem from "./SlideItem";
+import SortableSlideItem from "./SortableSlideItem";
 
 export default function SlideManager() {
     const {
@@ -10,6 +25,14 @@ export default function SlideManager() {
         selectedSlide,
         setSelectedSlide,
     } = useCarousel();
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 5,
+            },
+        })
+    );
 
     const addSlide = () => {
         const newSlide = {
@@ -27,7 +50,7 @@ export default function SlideManager() {
 
         if (!slide) return;
 
-        const duplicate = {
+        const duplicated = {
             ...slide,
             id: Date.now(),
             title: `${slide.title} Copy`,
@@ -35,15 +58,13 @@ export default function SlideManager() {
 
         const updated = [...slides];
 
-        updated.splice(index + 1, 0, duplicate);
+        updated.splice(index + 1, 0, duplicated);
 
         setSlides(updated);
     };
 
     const deleteSlide = (index: number) => {
-        if (slides.length <= 1) {
-            return;
-        }
+        if (slides.length <= 1) return;
 
         const updated = slides.filter((_, i) => i !== index);
 
@@ -51,6 +72,34 @@ export default function SlideManager() {
 
         if (selectedSlide >= updated.length) {
             setSelectedSlide(updated.length - 1);
+        }
+    };
+
+    const handleDragEnd = (event: DragEndEvent) => {
+        const { active, over } = event;
+
+        if (!over || active.id === over.id) {
+            return;
+        }
+
+        const oldIndex = slides.findIndex(
+            (slide) => slide.id === active.id
+        );
+
+        const newIndex = slides.findIndex(
+            (slide) => slide.id === over.id
+        );
+
+        const reorderedSlides = arrayMove(
+            slides,
+            oldIndex,
+            newIndex
+        );
+
+        setSlides(reorderedSlides);
+
+        if (selectedSlide === oldIndex) {
+            setSelectedSlide(newIndex);
         }
     };
 
@@ -80,21 +129,38 @@ export default function SlideManager() {
 
             </div>
 
-            <div className="space-y-4">
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+            >
+                <SortableContext
+                    items={slides.map((slide) => slide.id)}
+                    strategy={verticalListSortingStrategy}
+                >
+                    <div className="space-y-4">
 
-                {slides.map((slide, index) => (
-                    <SlideItem
-                        key={slide.id}
-                        slide={slide}
-                        index={index}
-                        selected={selectedSlide === index}
-                        onSelect={() => setSelectedSlide(index)}
-                        onDuplicate={() => duplicateSlide(index)}
-                        onDelete={() => deleteSlide(index)}
-                    />
-                ))}
+                        {slides.map((slide, index) => (
+                            <SortableSlideItem
+                                key={slide.id}
+                                slide={slide}
+                                index={index}
+                                selected={selectedSlide === index}
+                                onSelect={() =>
+                                    setSelectedSlide(index)
+                                }
+                                onDuplicate={() =>
+                                    duplicateSlide(index)
+                                }
+                                onDelete={() =>
+                                    deleteSlide(index)
+                                }
+                            />
+                        ))}
 
-            </div>
+                    </div>
+                </SortableContext>
+            </DndContext>
 
         </div>
     );
