@@ -8,6 +8,7 @@ import FilmStrip from "@/components/templates/film-strip/FilmStrip";
 import CoverFlow from "@/components/templates/cover-flow/CoverFlow";
 import Gallery from "@/components/templates/gallery/Gallery";
 import Cards from "@/components/templates/cards/Cards";
+import HeroSlider from "@/components/templates/hero-slider/HeroSlider";
 
 function ComingSoon({ title }: { title: string }) {
     return (
@@ -49,14 +50,12 @@ export default function TemplateRenderer() {
                     case "cards":
                         return <Cards />;
 
+                    case "hero-slider":
+                        return <HeroSlider />;
+
                     case "orbit":
                         return (
                             <ComingSoon title="Orbit" />
-                        );
-
-                    case "hero-slider":
-                        return (
-                            <ComingSoon title="Hero Slider" />
                         );
 
                     default:
