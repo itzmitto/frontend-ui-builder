@@ -2,6 +2,9 @@
 
 import { useEffect } from "react";
 
+import useDrag from "./useDrag";
+import useSwipe from "./useSwipe";
+
 type UseCarouselEngineProps = {
     autoplay: boolean;
     infinite: boolean;
@@ -19,7 +22,6 @@ export default function useCarouselEngine({
     selectedSlide,
     setSelectedSlide,
 }: UseCarouselEngineProps) {
-
     const nextSlide = () => {
         setSelectedSlide((previous) =>
             previous === slideCount - 1
@@ -47,6 +49,16 @@ export default function useCarouselEngine({
 
         setSelectedSlide(index);
     };
+
+    const swipe = useSwipe(
+        previousSlide,
+        nextSlide
+    );
+
+    const drag = useDrag(
+        previousSlide,
+        nextSlide
+    );
 
     useEffect(() => {
         if (!autoplay || slideCount <= 1) {
@@ -79,7 +91,10 @@ export default function useCarouselEngine({
         window.addEventListener("keydown", handleKeyDown);
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener(
+                "keydown",
+                handleKeyDown
+            );
         };
     }, [
         slideCount,
@@ -91,5 +106,7 @@ export default function useCarouselEngine({
         nextSlide,
         previousSlide,
         goToSlide,
+        swipe,
+        drag,
     };
 }
