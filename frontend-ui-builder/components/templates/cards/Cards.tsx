@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+
 import { useCarousel } from "@/context/CarouselContext";
+
 import CarouselViewport from "@/components/carousel/CarouselViewport";
 import CarouselContainer from "@/components/carousel/CarouselContainer";
 import SlideContent from "@/components/templates/shared/SlideContent";
@@ -43,10 +45,11 @@ export default function Cards() {
                         <button
                             key={slide.id}
                             onClick={() => setSelectedSlide(index)}
-                            className={`overflow-hidden rounded-2xl border transition-all duration-300 ${selectedSlide === index
-                                ? "border-blue-500 scale-105 shadow-[0_0_30px_rgba(59,130,246,.35)]"
-                                : "border-zinc-700 hover:border-zinc-500 hover:-translate-y-2"
-                                }`}
+                            className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
+                                selectedSlide === index
+                                    ? "scale-105 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,.35)]"
+                                    : "border-zinc-700 hover:-translate-y-2 hover:border-zinc-500"
+                            }`}
                         >
                             <Image
                                 src={slide.image}
@@ -56,19 +59,9 @@ export default function Cards() {
                                 className="h-56 w-full object-cover"
                             />
 
-                            <div className="bg-zinc-900 p-5">
-                                <SlideContent
-                                    slide={slide}
-                                />
+                            <div className="space-y-5 bg-zinc-900 p-5">
 
-                                <h3 className="text-xl font-bold text-white">
-                                    {slide.title}
-                                </h3>
-
-                                <p className="text-sm leading-6 text-zinc-400">
-                                    Beautiful responsive card component built
-                                    with the Frontend UI Builder.
-                                </p>
+                                <SlideContent slide={slide} />
 
                                 <div className="flex items-center justify-between">
 
@@ -76,9 +69,11 @@ export default function Cards() {
                                         Card #{index + 1}
                                     </span>
 
-                                    <span className="rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold">
-                                        Selected
-                                    </span>
+                                    {selectedSlide === index && (
+                                        <span className="rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
+                                            Selected
+                                        </span>
+                                    )}
 
                                 </div>
 
