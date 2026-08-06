@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function useDrag(
     onPrevious: () => void,
@@ -10,12 +10,26 @@ export default function useDrag(
 
     const dragging = useRef(false);
 
+    const [offsetX, setOffsetX] = useState(0);
+
     const onMouseDown = (
         e: React.MouseEvent
     ) => {
         dragging.current = true;
 
         startX.current = e.clientX;
+
+        setOffsetX(0);
+    };
+
+    const onMouseMove = (
+        e: React.MouseEvent
+    ) => {
+        if (!dragging.current) return;
+
+        setOffsetX(
+            e.clientX - startX.current
+        );
     };
 
     const onMouseUp = (
@@ -26,19 +40,33 @@ export default function useDrag(
         dragging.current = false;
 
         const diff =
-            startX.current - e.clientX;
+            e.clientX - startX.current;
 
-        if (Math.abs(diff) < 80) return;
-
-        if (diff > 0) {
-            onNext();
-        } else {
+        if (diff > 80) {
             onPrevious();
+        } else if (diff < -80) {
+            onNext();
         }
+
+        setOffsetX(0);
+    };
+
+    const onMouseLeave = () => {
+        dragging.current = false;
+
+        setOffsetX(0);
     };
 
     return {
+        offsetX,
+        dragging: dragging.current,
+
         onMouseDown,
+
+        onMouseMove,
+
         onMouseUp,
+
+        onMouseLeave,
     };
 }
