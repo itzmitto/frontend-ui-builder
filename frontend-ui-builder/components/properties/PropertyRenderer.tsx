@@ -14,7 +14,7 @@ function ComingSoon({ title }: { title: string }) {
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
             <h2 className="text-lg font-semibold text-white">
                 {title}
-            </h2>
+            </h2>  
 
             <p className="mt-2 text-sm text-zinc-400">
                 Settings coming soon.
