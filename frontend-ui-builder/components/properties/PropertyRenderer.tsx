@@ -4,6 +4,7 @@ import { useCarousel } from "@/context/CarouselContext";
 
 import FilmStripSettings from "@/components/templates/film-strip/FilmStripSettings";
 import GallerySettings from "@/components/templates/gallery/GallerySettings";
+import HeroSliderSettings from "@/components/templates/hero-slider/HeroSliderSettings";
 
 import SlideProperties from "./SlideProperties";
 import InspectorSection from "./InspectorSection";
@@ -14,7 +15,7 @@ function ComingSoon({ title }: { title: string }) {
         <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
             <h2 className="text-lg font-semibold text-white">
                 {title}
-            </h2>  
+            </h2>
 
             <p className="mt-2 text-sm text-zinc-400">
                 Settings coming soon.
@@ -53,6 +54,23 @@ export default function PropertyRenderer() {
 
                     <InspectorSection title="Gallery">
                         <GallerySettings />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
+                </>
+            );
+
+        case "hero-slider":
+            return (
+                <>
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Hero Slider">
+                        <HeroSliderSettings />
                     </InspectorSection>
 
                     <InspectorSection title="Animation">
@@ -104,23 +122,6 @@ export default function PropertyRenderer() {
 
                     <InspectorSection title="Orbit">
                         <ComingSoon title="Orbit" />
-                    </InspectorSection>
-
-                    <InspectorSection title="Animation">
-                        <AnimationPanel />
-                    </InspectorSection>
-                </>
-            );
-
-        case "hero-slider":
-            return (
-                <>
-                    <InspectorSection title="Content">
-                        <SlideProperties />
-                    </InspectorSection>
-
-                    <InspectorSection title="Hero Slider">
-                        <ComingSoon title="Hero Slider" />
                     </InspectorSection>
 
                     <InspectorSection title="Animation">
