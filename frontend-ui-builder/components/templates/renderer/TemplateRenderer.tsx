@@ -2,6 +2,8 @@
 
 import { useCarousel } from "@/context/CarouselContext";
 
+import PreviewCanvas from "@/components/editor/PreviewCanvas";
+
 import FilmStrip from "@/components/templates/film-strip/FilmStrip";
 import CoverFlow from "@/components/templates/cover-flow/CoverFlow";
 import Gallery from "@/components/templates/gallery/Gallery";
@@ -9,18 +11,20 @@ import Cards from "@/components/templates/cards/Cards";
 
 function ComingSoon({ title }: { title: string }) {
     return (
-        <div className="flex h-full flex-col items-center justify-center text-center">
-            <div className="mb-4 text-7xl">
-                🚧
+        <div className="flex h-full items-center justify-center">
+            <div className="text-center">
+                <div className="mb-4 text-7xl">
+                    🚧
+                </div>
+
+                <h2 className="text-3xl font-bold text-white">
+                    {title}
+                </h2>
+
+                <p className="mt-2 text-zinc-400">
+                    This template is coming soon.
+                </p>
             </div>
-
-            <h2 className="text-3xl font-bold text-white">
-                {title}
-            </h2>
-
-            <p className="mt-2 text-zinc-400">
-                This template is coming soon.
-            </p>
         </div>
     );
 }
@@ -28,26 +32,38 @@ function ComingSoon({ title }: { title: string }) {
 export default function TemplateRenderer() {
     const { selectedTemplate } = useCarousel();
 
-    switch (selectedTemplate) {
-        case "film-strip":
-            return <FilmStrip />;
+    return (
+        <PreviewCanvas>
 
-        case "cover-flow":
-            return <CoverFlow />;
+            {(() => {
+                switch (selectedTemplate) {
+                    case "film-strip":
+                        return <FilmStrip />;
 
-        case "gallery":
-            return <Gallery />;
+                    case "cover-flow":
+                        return <CoverFlow />;
 
-        case "cards":
-            return <Cards />;
+                    case "gallery":
+                        return <Gallery />;
 
-        case "orbit":
-            return <ComingSoon title="Orbit" />;
+                    case "cards":
+                        return <Cards />;
 
-        case "hero-slider":
-            return <ComingSoon title="Hero Slider" />;
+                    case "orbit":
+                        return (
+                            <ComingSoon title="Orbit" />
+                        );
 
-        default:
-            return <FilmStrip />;
-    }
+                    case "hero-slider":
+                        return (
+                            <ComingSoon title="Hero Slider" />
+                        );
+
+                    default:
+                        return <FilmStrip />;
+                }
+            })()}
+
+        </PreviewCanvas>
+    );
 }
