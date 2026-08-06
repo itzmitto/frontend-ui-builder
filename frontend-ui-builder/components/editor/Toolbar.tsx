@@ -1,12 +1,15 @@
 "use client";
 
 import { useCarousel } from "@/context/CarouselContext";
+
 import {
     generateHTML,
     generateCSS,
     generateJS,
 } from "@/lib/generators/carouselGenerator";
+
 import { exportCarousel } from "@/lib/export/exportCarousel";
+
 import DeviceSwitcher from "./DeviceSwitcher";
 
 export default function Toolbar() {
@@ -22,10 +25,20 @@ export default function Toolbar() {
         const newSlide = {
             id: Date.now(),
             title: `Slide ${slides.length + 1}`,
+            description: "New slide description.",
+            buttonText: "Learn More",
+            buttonLink: "#",
             image: `https://picsum.photos/800/500?random=${Date.now()}`,
+            animation: "fade" as const,
+            duration: 500,
+            delay: 0,
         };
 
-        setSlides([...slides, newSlide]);
+        setSlides([
+            ...slides,
+            newSlide,
+        ]);
+
         setSelectedSlide(slides.length);
     };
 
@@ -40,7 +53,11 @@ export default function Toolbar() {
             title: `${slide.title} Copy`,
         };
 
-        setSlides([...slides, duplicatedSlide]);
+        setSlides([
+            ...slides,
+            duplicatedSlide,
+        ]);
+
         setSelectedSlide(slides.length);
     };
 
@@ -53,8 +70,13 @@ export default function Toolbar() {
 
         setSlides(updatedSlides);
 
-        if (selectedSlide >= updatedSlides.length) {
-            setSelectedSlide(updatedSlides.length - 1);
+        if (
+            selectedSlide >=
+            updatedSlides.length
+        ) {
+            setSelectedSlide(
+                updatedSlides.length - 1
+            );
         }
     };
 
@@ -68,6 +90,7 @@ export default function Toolbar() {
 
     return (
         <div className="flex items-center gap-3 border-b border-zinc-800 bg-zinc-900 p-4">
+
             <DeviceSwitcher />
 
             <div className="h-6 w-px bg-zinc-700" />
@@ -98,12 +121,15 @@ export default function Toolbar() {
                 Delete
             </button>
 
+            <div className="ml-auto" />
+
             <button
                 onClick={exportProject}
                 className="rounded-lg bg-green-600 px-4 py-2 transition hover:bg-green-700"
             >
                 Export ZIP
             </button>
+
         </div>
     );
 }
