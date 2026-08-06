@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useCarousel } from "@/context/CarouselContext";
-
 import CarouselViewport from "@/components/carousel/CarouselViewport";
 import CarouselContainer from "@/components/carousel/CarouselContainer";
+import SlideContent from "@/components/templates/shared/SlideContent";
 
 export default function Cards() {
     const {
@@ -43,11 +43,10 @@ export default function Cards() {
                         <button
                             key={slide.id}
                             onClick={() => setSelectedSlide(index)}
-                            className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
-                                selectedSlide === index
-                                    ? "border-blue-500 scale-105 shadow-[0_0_30px_rgba(59,130,246,.35)]"
-                                    : "border-zinc-700 hover:border-zinc-500 hover:-translate-y-2"
-                            }`}
+                            className={`overflow-hidden rounded-2xl border transition-all duration-300 ${selectedSlide === index
+                                ? "border-blue-500 scale-105 shadow-[0_0_30px_rgba(59,130,246,.35)]"
+                                : "border-zinc-700 hover:border-zinc-500 hover:-translate-y-2"
+                                }`}
                         >
                             <Image
                                 src={slide.image}
@@ -57,7 +56,10 @@ export default function Cards() {
                                 className="h-56 w-full object-cover"
                             />
 
-                            <div className="space-y-3 bg-zinc-900 p-5 text-left">
+                            <div className="bg-zinc-900 p-5">
+                                <SlideContent
+                                    slide={slide}
+                                />
 
                                 <h3 className="text-xl font-bold text-white">
                                     {slide.title}
