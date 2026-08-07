@@ -8,6 +8,7 @@ import LayersPanel from "./LayersPanel";
 import HistoryPanel from "./HistoryPanel";
 import ThemePanel from "./ThemePanel";
 import SlidesPanel from "./SlidesPanel";
+import MediaLibrary from "./MediaLibrary";
 
 import TemplateRenderer from "@/components/templates/renderer/TemplateRenderer";
 
@@ -27,6 +28,7 @@ export default function EditorLayout() {
                     <div className="space-y-4">
                         <SlidesPanel />
                         <AssetsPanel />
+                        <MediaLibrary />
                         <LayersPanel />
                         <ThemePanel />
                     </div>

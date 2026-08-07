@@ -5,54 +5,99 @@ import { useCarousel } from "@/context/CarouselContext";
 export default function LayersPanel() {
     const {
         slides,
+        setSlides,
         selectedSlide,
         setSelectedSlide,
     } = useCarousel();
 
-    return (
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
+    const moveUp = (index: number) => {
+        if (index === 0) return;
 
-            <h2 className="mb-4 text-lg font-semibold text-white">
+        const updated = [...slides];
+
+        [
+            updated[index - 1],
+            updated[index],
+        ] = [
+            updated[index],
+            updated[index - 1],
+        ];
+
+        setSlides(updated);
+
+        if (selectedSlide === index) {
+            setSelectedSlide(index - 1);
+        }
+    };
+
+    const moveDown = (index: number) => {
+        if (index === slides.length - 1) return;
+
+        const updated = [...slides];
+
+        [
+            updated[index + 1],
+            updated[index],
+        ] = [
+            updated[index],
+            updated[index + 1],
+        ];
+
+        setSlides(updated);
+
+        if (selectedSlide === index) {
+            setSelectedSlide(index + 1);
+        }
+    };
+
+    return (
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
+
+            <h2 className="mb-4 text-sm font-semibold text-white">
                 Layers
             </h2>
 
             <div className="space-y-2">
 
-                <div className="rounded-lg bg-zinc-800 px-3 py-2 font-medium">
-                    📂 Carousel
-                </div>
-
                 {slides.map((slide, index) => (
-                    <div key={slide.id}>
-
+                    <div
+                        key={slide.id}
+                        className={`flex items-center justify-between rounded-lg border p-3 ${
+                            selectedSlide === index
+                                ? "border-blue-500 bg-zinc-800"
+                                : "border-zinc-700"
+                        }`}
+                    >
                         <button
-                            onClick={() => setSelectedSlide(index)}
-                            className={`ml-4 flex w-full items-center rounded-lg px-3 py-2 text-left transition ${
-                                selectedSlide === index
-                                    ? "bg-blue-600 text-white"
-                                    : "hover:bg-zinc-800"
-                            }`}
+                            onClick={() =>
+                                setSelectedSlide(index)
+                            }
+                            className="flex-1 text-left"
                         >
-                            🖼️ {slide.title}
+                            {slide.title}
                         </button>
 
-                        {selectedSlide === index && (
-                            <div className="ml-10 mt-1 space-y-1">
+                        <div className="flex gap-2">
 
-                                <div className="rounded px-2 py-1 text-sm text-zinc-400">
-                                    📝 Title
-                                </div>
+                            <button
+                                onClick={() =>
+                                    moveUp(index)
+                                }
+                                className="rounded bg-zinc-700 px-2 py-1 text-xs"
+                            >
+                                ↑
+                            </button>
 
-                                <div className="rounded px-2 py-1 text-sm text-zinc-400">
-                                    🖼️ Image
-                                </div>
+                            <button
+                                onClick={() =>
+                                    moveDown(index)
+                                }
+                                className="rounded bg-zinc-700 px-2 py-1 text-xs"
+                            >
+                                ↓
+                            </button>
 
-                                <div className="rounded px-2 py-1 text-sm text-zinc-400">
-                                    🔘 Button
-                                </div>
-
-                            </div>
-                        )}
+                        </div>
 
                     </div>
                 ))}
