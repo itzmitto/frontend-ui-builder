@@ -13,6 +13,7 @@ import { exportCarousel } from "@/lib/export/exportCarousel";
 import DeviceSwitcher from "./DeviceSwitcher";
 import ProjectButtons from "./ProjectButtons";
 import ExportReactButton from "./ExportReactButton";
+import UndoRedoButtons from "./UndoRedoButtons";
 
 export default function Toolbar() {
     const {
@@ -92,6 +93,10 @@ export default function Toolbar() {
 
     return (
         <div className="flex items-center gap-3 border-b border-zinc-800 bg-zinc-900 p-4">
+
+            <UndoRedoButtons />
+
+            <div className="h-6 w-px bg-zinc-700" />
 
             <DeviceSwitcher />
 
