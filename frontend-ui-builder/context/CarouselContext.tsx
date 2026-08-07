@@ -17,6 +17,11 @@ import {
     defaultCoverFlowSettings,
 } from "@/types/coverFlow";
 
+import {
+    AccordionGallerySettings,
+    defaultAccordionGallerySettings,
+} from "@/types/accordionGallery";
+
 import { Slide } from "@/types/slide";
 import { Media } from "@/types/media";
 import { Device } from "@/types/device";
@@ -29,6 +34,11 @@ type CarouselContextType = {
     coverFlowSettings: CoverFlowSettings;
     setCoverFlowSettings: React.Dispatch<
         React.SetStateAction<CoverFlowSettings>
+    >;
+
+    accordionGallerySettings: AccordionGallerySettings;
+    setAccordionGallerySettings: React.Dispatch<
+        React.SetStateAction<AccordionGallerySettings>
     >;
 
     slides: Slide[];
@@ -63,6 +73,11 @@ export function CarouselProvider({
 
     const [coverFlowSettings, setCoverFlowSettings] =
         useState(defaultCoverFlowSettings);
+
+    const [
+        accordionGallerySettings,
+        setAccordionGallerySettings,
+    ] = useState(defaultAccordionGallerySettings);
 
     const [slides, setSlides] = useState<Slide[]>([
         {
@@ -119,6 +134,9 @@ export function CarouselProvider({
 
                 coverFlowSettings,
                 setCoverFlowSettings,
+
+                accordionGallerySettings,
+                setAccordionGallerySettings,
 
                 slides,
                 setSlides,
