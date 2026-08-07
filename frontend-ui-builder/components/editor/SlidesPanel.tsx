@@ -1,6 +1,19 @@
 "use client";
 
+import {
+    DndContext,
+    closestCenter,
+} from "@dnd-kit/core";
+
+import {
+    SortableContext,
+    verticalListSortingStrategy,
+    arrayMove,
+} from "@dnd-kit/sortable";
+
 import { useCarousel } from "@/context/CarouselContext";
+
+import SortableSlideItem from "./SortableSlideItem";
 
 export default function SlidesPanel() {
     const {
@@ -10,32 +23,29 @@ export default function SlidesPanel() {
         setSelectedSlide,
     } = useCarousel();
 
-    const moveUp = (index: number) => {
-        if (index === 0) return;
+    const handleDragEnd = (event: any) => {
+        const { active, over } = event;
 
-        const updated = [...slides];
+        if (!over) return;
 
-        [updated[index - 1], updated[index]] = [
-            updated[index],
-            updated[index - 1],
-        ];
+        if (active.id === over.id) return;
 
-        setSlides(updated);
-        setSelectedSlide(index - 1);
-    };
+        const oldIndex = slides.findIndex(
+            (slide) => slide.id === active.id
+        );
 
-    const moveDown = (index: number) => {
-        if (index === slides.length - 1) return;
+        const newIndex = slides.findIndex(
+            (slide) => slide.id === over.id
+        );
 
-        const updated = [...slides];
-
-        [updated[index + 1], updated[index]] = [
-            updated[index],
-            updated[index + 1],
-        ];
+        const updated = arrayMove(
+            slides,
+            oldIndex,
+            newIndex
+        );
 
         setSlides(updated);
-        setSelectedSlide(index + 1);
+        setSelectedSlide(newIndex);
     };
 
     return (
@@ -45,52 +55,42 @@ export default function SlidesPanel() {
                 Slides
             </h2>
 
-            <div className="space-y-2">
+            <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+            >
+                <SortableContext
+                    items={slides.map(
+                        (slide) => slide.id
+                    )}
+                    strategy={
+                        verticalListSortingStrategy
+                    }
+                >
+                    <div className="space-y-2">
 
-                {slides.map((slide, index) => (
-                    <div
-                        key={slide.id}
-                        className={`flex items-center justify-between rounded-lg border p-3 ${
-                            selectedSlide === index
-                                ? "border-blue-500 bg-zinc-800"
-                                : "border-zinc-700"
-                        }`}
-                    >
-                        <button
-                            onClick={() =>
-                                setSelectedSlide(index)
-                            }
-                            className="flex-1 text-left"
-                        >
-                            {slide.title}
-                        </button>
-
-                        <div className="flex gap-2">
-
-                            <button
-                                onClick={() =>
-                                    moveUp(index)
-                                }
-                                className="rounded bg-zinc-700 px-2 py-1"
-                            >
-                                ↑
-                            </button>
-
-                            <button
-                                onClick={() =>
-                                    moveDown(index)
-                                }
-                                className="rounded bg-zinc-700 px-2 py-1"
-                            >
-                                ↓
-                            </button>
-
-                        </div>
+                        {slides.map(
+                            (slide, index) => (
+                                <SortableSlideItem
+                                    key={slide.id}
+                                    id={slide.id}
+                                    title={slide.title}
+                                    selected={
+                                        selectedSlide ===
+                                        index
+                                    }
+                                    onClick={() =>
+                                        setSelectedSlide(
+                                            index
+                                        )
+                                    }
+                                />
+                            )
+                        )}
 
                     </div>
-                ))}
-
-            </div>
+                </SortableContext>
+            </DndContext>
 
         </div>
     );

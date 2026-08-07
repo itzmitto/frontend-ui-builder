@@ -3,46 +3,49 @@
 import { useState } from "react";
 
 export default function useHistory<T>(initialState: T) {
-    const [past, setPast] = useState<T[]>([]);
-    const [present, setPresent] = useState(initialState);
-    const [future, setFuture] = useState<T[]>([]);
+    const [history, setHistory] = useState<T[]>([
+        initialState,
+    ]);
+
+    const [currentIndex, setCurrentIndex] =
+        useState(0);
+
+    const current = history[currentIndex];
 
     const set = (newState: T) => {
-        setPast((previous) => [...previous, present]);
-        setPresent(newState);
-        setFuture([]);
+        const updatedHistory = history.slice(
+            0,
+            currentIndex + 1
+        );
+
+        updatedHistory.push(newState);
+
+        setHistory(updatedHistory);
+
+        setCurrentIndex(
+            updatedHistory.length - 1
+        );
     };
 
     const undo = () => {
-        if (past.length === 0) return;
-
-        const previous = past[past.length - 1];
-
-        setPast((p) => p.slice(0, -1));
-
-        setFuture((f) => [present, ...f]);
-
-        setPresent(previous);
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
     };
 
     const redo = () => {
-        if (future.length === 0) return;
-
-        const next = future[0];
-
-        setFuture((f) => f.slice(1));
-
-        setPast((p) => [...p, present]);
-
-        setPresent(next);
+        if (currentIndex < history.length - 1) {
+            setCurrentIndex(currentIndex + 1);
+        }
     };
 
     return {
-        state: present,
+        current,
         set,
         undo,
         redo,
-        canUndo: past.length > 0,
-        canRedo: future.length > 0,
+        canUndo: currentIndex > 0,
+        canRedo:
+            currentIndex < history.length - 1,
     };
 }
