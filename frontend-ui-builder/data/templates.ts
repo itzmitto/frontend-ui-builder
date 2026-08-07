@@ -60,6 +60,12 @@ export const templateCategories: TemplateCategory[] = [
                 description: "Fullscreen hero carousel",
                 image: "/templates/img1.png",
             },
+            {
+                id: "accordion-gallery",
+                name: "Accordion",
+                description: "Expanding image gallery",
+                image: "/templates/img1.png",
+            },
         ],
     },
 ];

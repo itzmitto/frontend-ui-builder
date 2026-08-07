@@ -4,4 +4,6 @@ export type Template =
     | "orbit"
     | "cards"
     | "gallery"
-    | "hero-slider";
+    | "hero-slider"
+    | "accordion-gallery";
+    
