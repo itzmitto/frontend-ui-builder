@@ -11,7 +11,7 @@ import {
 import { exportCarousel } from "@/lib/export/exportCarousel";
 
 import DeviceSwitcher from "./DeviceSwitcher";
-
+import ProjectButtons from "./ProjectButtons";
 export default function Toolbar() {
     const {
         settings,
@@ -92,6 +92,8 @@ export default function Toolbar() {
         <div className="flex items-center gap-3 border-b border-zinc-800 bg-zinc-900 p-4">
 
             <DeviceSwitcher />
+
+            <ProjectButtons />
 
             <div className="h-6 w-px bg-zinc-700" />
 
