@@ -6,6 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { CarouselProvider } from "@/context/CarouselContext";
 import { EditorProvider } from "@/context/EditorContext";
+import { HistoryProvider } from "@/context/HistoryContext";
 
 export const metadata: Metadata = {
     title: "Frontend UI Builder",
@@ -21,19 +22,12 @@ export default function RootLayout({
         <html lang="en">
             <body className="bg-zinc-950 text-white">
                 <ThemeProvider>
-
-                    <EditorProvider>
-
+                    <HistoryProvider>
                         <CarouselProvider>
-
                             <Navbar />
-
                             {children}
-
                         </CarouselProvider>
-
-                    </EditorProvider>
-
+                    </HistoryProvider>
                 </ThemeProvider>
             </body>
         </html>
