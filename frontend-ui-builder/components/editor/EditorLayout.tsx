@@ -7,6 +7,7 @@ import AssetsPanel from "./AssetsPanel";
 import LayersPanel from "./LayersPanel";
 import HistoryPanel from "./HistoryPanel";
 import ThemePanel from "./ThemePanel";
+import SlidesPanel from "./SlidesPanel";
 
 import TemplateRenderer from "@/components/templates/renderer/TemplateRenderer";
 
@@ -24,6 +25,7 @@ export default function EditorLayout() {
                 </div>
                 <div className="border-t border-zinc-800 p-4">
                     <div className="space-y-4">
+                        <SlidesPanel />
                         <AssetsPanel />
                         <LayersPanel />
                         <ThemePanel />
