@@ -9,11 +9,13 @@ import CoverFlow from "@/components/templates/cover-flow/CoverFlow";
 import Gallery from "@/components/templates/gallery/Gallery";
 import Cards from "@/components/templates/cards/Cards";
 import HeroSlider from "@/components/templates/hero-slider/HeroSlider";
+import AccordionGallery from "@/components/templates/accordion-gallery/AccordionGallery";
 
 function ComingSoon({ title }: { title: string }) {
     return (
         <div className="flex h-full items-center justify-center">
             <div className="text-center">
+
                 <div className="mb-4 text-7xl">
                     🚧
                 </div>
@@ -25,6 +27,7 @@ function ComingSoon({ title }: { title: string }) {
                 <p className="mt-2 text-zinc-400">
                     This template is coming soon.
                 </p>
+
             </div>
         </div>
     );
@@ -52,6 +55,9 @@ export default function TemplateRenderer() {
 
                     case "hero-slider":
                         return <HeroSlider />;
+
+                    case "accordion-gallery":
+                        return <AccordionGallery />;
 
                     case "orbit":
                         return (
