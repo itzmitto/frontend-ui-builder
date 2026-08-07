@@ -12,6 +12,7 @@ import { exportCarousel } from "@/lib/export/exportCarousel";
 
 import DeviceSwitcher from "./DeviceSwitcher";
 import ProjectButtons from "./ProjectButtons";
+import ExportReactButton from "./ExportReactButton";
 export default function Toolbar() {
     const {
         settings,
