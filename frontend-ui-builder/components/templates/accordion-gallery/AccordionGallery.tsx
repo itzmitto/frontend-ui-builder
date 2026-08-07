@@ -6,7 +6,10 @@ import { useState } from "react";
 import { useCarousel } from "@/context/CarouselContext";
 
 export default function AccordionGallery() {
-    const { slides } = useCarousel();
+    const {
+        slides,
+        accordionGallerySettings,
+    } = useCarousel();
 
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -23,22 +26,41 @@ export default function AccordionGallery() {
     return (
         <section className="flex h-full w-full items-center justify-center p-10">
 
-            <div className="flex h-[600px] w-full max-w-7xl gap-4">
-
+            <div
+                className="flex h-[600px] w-full max-w-7xl"
+                style={{
+                    gap: accordionGallerySettings.gap,
+                }}
+            >
                 {slides.map((slide, index) => (
                     <button
                         key={slide.id}
-                        onMouseEnter={() =>
-                            setActiveIndex(index)
-                        }
-                        onClick={() =>
-                            setActiveIndex(index)
-                        }
-                        className={`relative overflow-hidden rounded-3xl transition-all duration-500 ${
+                        onMouseEnter={() => {
+                            if (
+                                accordionGallerySettings.trigger ===
+                                "hover"
+                            ) {
+                                setActiveIndex(index);
+                            }
+                        }}
+                        onClick={() => {
+                            if (
+                                accordionGallerySettings.trigger ===
+                                "click"
+                            ) {
+                                setActiveIndex(index);
+                            }
+                        }}
+                        className={`relative overflow-hidden transition-all ${
                             activeIndex === index
-                                ? "flex-[5]"
+                                ? `flex-[${accordionGallerySettings.expandedFlex}]`
                                 : "flex-1"
                         }`}
+                        style={{
+                            borderRadius:
+                                accordionGallerySettings.borderRadius,
+                            transitionDuration: `${accordionGallerySettings.animationSpeed}ms`,
+                        }}
                     >
                         <Image
                             src={slide.image}
@@ -47,13 +69,19 @@ export default function AccordionGallery() {
                             className="object-cover"
                         />
 
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        <div
+                            className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"
+                            style={{
+                                opacity:
+                                    accordionGallerySettings.overlayOpacity,
+                            }}
+                        />
 
                         <div
                             className={`absolute bottom-0 left-0 p-8 transition-all duration-500 ${
                                 activeIndex === index
-                                    ? "opacity-100"
-                                    : "opacity-0"
+                                    ? "opacity-100 translate-y-0"
+                                    : "opacity-0 translate-y-10"
                             }`}
                         >
                             <h2 className="text-3xl font-bold text-white">
@@ -65,15 +93,13 @@ export default function AccordionGallery() {
                             </p>
 
                             {slide.buttonText && (
-                                <button className="mt-5 rounded-xl bg-blue-600 px-5 py-3 font-medium">
+                                <button className="mt-5 rounded-xl bg-blue-600 px-5 py-3 font-medium text-white">
                                     {slide.buttonText}
                                 </button>
                             )}
                         </div>
-
                     </button>
                 ))}
-
             </div>
 
         </section>
