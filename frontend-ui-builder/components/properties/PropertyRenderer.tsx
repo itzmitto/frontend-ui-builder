@@ -5,6 +5,7 @@ import { useCarousel } from "@/context/CarouselContext";
 import FilmStripSettings from "@/components/templates/film-strip/FilmStripSettings";
 import GallerySettings from "@/components/templates/gallery/GallerySettings";
 import HeroSliderSettings from "@/components/templates/hero-slider/HeroSliderSettings";
+import AccordionGallerySettings from "@/components/templates/accordion-gallery/AccordionGallerySettings";
 
 import SlideProperties from "./SlideProperties";
 import InspectorSection from "./InspectorSection";
@@ -71,6 +72,23 @@ export default function PropertyRenderer() {
 
                     <InspectorSection title="Hero Slider">
                         <HeroSliderSettings />
+                    </InspectorSection>
+
+                    <InspectorSection title="Animation">
+                        <AnimationPanel />
+                    </InspectorSection>
+                </>
+            );
+
+        case "accordion-gallery":
+            return (
+                <>
+                    <InspectorSection title="Content">
+                        <SlideProperties />
+                    </InspectorSection>
+
+                    <InspectorSection title="Accordion">
+                        <AccordionGallerySettings />
                     </InspectorSection>
 
                     <InspectorSection title="Animation">
