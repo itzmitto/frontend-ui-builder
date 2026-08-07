@@ -1,106 +1,55 @@
 "use client";
 
-import { ChangeEvent } from "react";
 import { useCarousel } from "@/context/CarouselContext";
-import MediaCard from "./MediaCard";
-import DropZone from "./DropZone";
 
 export default function MediaLibrary() {
     const {
         media,
-        setMedia,
         slides,
-        setSlides,
         selectedSlide,
+        setSlides,
     } = useCarousel();
 
-    const addImage = (file: File) => {
-        const image = {
-            id: Date.now(),
-            url: URL.createObjectURL(file),
-        };
+    const assignImage = (
+        url: string
+    ) => {
+        const updated = [...slides];
 
-        setMedia((previous) => [...previous, image]);
-    };
-
-    const uploadImage = (event: ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-
-        if (!file) return;
-
-        addImage(file);
-
-        event.target.value = "";
-    };
-
-    const selectImage = (url: string) => {
-        if (!slides[selectedSlide]) return;
-
-        const updatedSlides = [...slides];
-
-        updatedSlides[selectedSlide] = {
-            ...updatedSlides[selectedSlide],
+        updated[selectedSlide] = {
+            ...updated[selectedSlide],
             image: url,
         };
 
-        setSlides(updatedSlides);
-    };
-
-    const deleteImage = (id: number) => {
-        const imageToDelete = media.find(
-            (image) => image.id === id
-        );
-
-        setMedia((previous) =>
-            previous.filter((image) => image.id !== id)
-        );
-
-        if (
-            imageToDelete &&
-            slides[selectedSlide]?.image === imageToDelete.url
-        ) {
-            const updatedSlides = [...slides];
-
-            updatedSlides[selectedSlide] = {
-                ...updatedSlides[selectedSlide],
-                image: "",
-            };
-
-            setSlides(updatedSlides);
-        }
+        setSlides(updated);
     };
 
     return (
-        <div className="space-y-4">
+        <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-4">
 
-            <DropZone onFile={addImage} />
+            <h2 className="mb-4 text-sm font-semibold text-white">
+                Media Library
+            </h2>
 
-            <input
-                type="file"
-                accept="image/*"
-                onChange={uploadImage}
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 p-2 text-sm transition hover:border-zinc-500"
-            />
+            <div className="grid grid-cols-3 gap-2">
 
-            {media.length === 0 ? (
-                <div className="rounded-xl border border-dashed border-zinc-700 p-8 text-center text-sm text-zinc-500">
-                    No images uploaded yet.
-                </div>
-            ) : (
-                <div className="grid grid-cols-2 gap-3">
-                    {media.map((image) => (
-                        <MediaCard
-                            key={image.id}
-                            image={image}
-                            selected={
-                                slides[selectedSlide]?.image === image.url
-                            }
-                            onClick={() => selectImage(image.url)}
-                            onDelete={() => deleteImage(image.id)}
+                {media.map((item) => (
+                    <button
+                        key={item.id}
+                        onClick={() =>
+                            assignImage(
+                                item.url
+                            )
+                        }
+                    >
+                        <img
+                            src={item.url}
+                            alt={item.name}
+                            className="h-20 w-full rounded-lg object-cover hover:ring-2 hover:ring-blue-500"
                         />
-                    ))}
-                </div>
-            )}
+                    </button>
+                ))}
+
+            </div>
 
         </div>
     );
